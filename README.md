@@ -1,9 +1,8 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/twPj_hbU)
+Title: CineFlex 
 
-# Project template
-
-To get started, open the Readme.md files in the analysis, back-end and front-end folders.
-
-Change this readme file to describe your project, change the title and fill in your name below.
+Description: op de CineFlex pagina krijg je een overzicht van alle films die je kan gaan 
+bekijken. Users kunnen zijn welke films in welke zaal spelen op welke tijd en datum en 
+kan je ook op deze app je tickets voor de film kopen. Als admin kan je alles wat een user 
+kan en ook nieuwe films en zalen toevoegen en bewerken. 
 
 ### Hendrik Geurts / Paul Michiels

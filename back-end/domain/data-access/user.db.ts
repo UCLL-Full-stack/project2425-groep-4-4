@@ -8,9 +8,14 @@ const createUser = ({admin, voornaam, achternaam, email, password}: User): User 
     return user
 }
 
+const getUserByEmail = (email: string): User | undefined => {
+    return users.find(user => user.email === email)
+}
+
 const getAllUsers = (): User[] => users;
 
 export default {
     createUser,
+    getUserByEmail,
     getAllUsers
 }

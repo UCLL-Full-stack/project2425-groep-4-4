@@ -18,6 +18,7 @@ export class Voorstelling {
         this.datum = voorstelling.datum
         this.tijdstip = voorstelling.tijdstip
         this.tickets = voorstelling.tickets
+        this.validate(voorstelling)
     }
 
     getId(): number | undefined {
@@ -42,5 +43,23 @@ export class Voorstelling {
 
     getTickets(): Ticket[] {
         return this.tickets
+    }
+
+    validate(voorstelling: {zaal: Zaal; film: Film; datum: Date; tijdstip: string}) {
+        if (!voorstelling.zaal) {
+            throw new Error("Zaal is verplicht")
+        }
+        if (!voorstelling.film) {
+            throw new Error("Film is verplicht")
+        }
+        if (!voorstelling.datum) {
+            throw new Error("Datum is verplicht")
+        }
+        if (voorstelling.datum < new Date()) {
+            throw new Error("Datum moet in de toekomst liggen")
+        }
+        if (!voorstelling.tijdstip) {
+            throw new Error("Tijdstip is verplicht")
+        }
     }
 }

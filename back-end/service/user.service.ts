@@ -8,6 +8,10 @@ const createUser = ({admin, voornaam, achternaam, email, password}: UserInput): 
         throw new Error("Voornaam, achternaam, email en password zijn verplicht")
     }
 
+    if (userDb.getUserByEmail(email)) {
+        throw new Error(`User met email ${email} bestaat al`)
+    }
+
     const user = new User({admin, voornaam, achternaam, email, password, tickets: []})
     
     return userDb.createUser(user)

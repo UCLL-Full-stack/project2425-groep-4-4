@@ -10,6 +10,7 @@ export class Ticket {
         this.id = ticket.id
         this.voorstelling = ticket.voorstelling
         this.user = ticket.user
+        this.validate(ticket)
     }
 
     getId(): number | undefined {
@@ -23,4 +24,10 @@ export class Ticket {
     getUser(): User | undefined {
         return this.user
     }   
+
+    validate(Ticket: {voorstelling: Voorstelling}) {
+        if (!Ticket.voorstelling) {
+            throw new Error("Voorstelling is verplicht")
+        }
+    }
 }

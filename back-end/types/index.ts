@@ -9,6 +9,7 @@ export type ActeurInput = {
 
 export type FilmInput = {
     id?: number
+    titel?: string
     speeltijd?: number
     beschrijving?: string
     voorstellingen?: VoorstellingInput[]

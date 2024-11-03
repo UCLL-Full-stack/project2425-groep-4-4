@@ -8,6 +8,10 @@ const createVoorstelling = ({zaal, film, datum, tijdstip}: Voorstelling): Voorst
     return voorstelling
 }
 
+const getVoorstellingByInfo = ({zaal, film, datum, tijdstip}: Voorstelling): Voorstelling | undefined => {
+    return voorstellingen.find(v => v.zaal === zaal && v.film === film && v.datum === datum && v.tijdstip === tijdstip)
+}
+
 const getVoorstellingById = (id: number): Voorstelling => {
     const voorstelling = voorstellingen.find(v => v.id === id)
     if (!voorstelling) {
@@ -20,6 +24,7 @@ const getAllVoorstellingen = (): Voorstelling[] => voorstellingen;
 
 export default {
     createVoorstelling,
+    getVoorstellingByInfo,
     getVoorstellingById,
     getAllVoorstellingen
 }

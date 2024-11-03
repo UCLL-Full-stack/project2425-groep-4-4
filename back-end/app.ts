@@ -4,12 +4,15 @@ import cors from 'cors';
 import * as bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { acteurRouter } from './controller/acteur.router';
-import { filmRouter } from './controller/film.router';
-import { ticketRouter } from './controller/ticket.router';
-import { userRouter } from './controller/user.router';
-import { voorstellingRouter } from './controller/voorstelling.router';
-import { zaalRouter } from './controller/zaal.router';
+import { acteurRouter } from './controller/acteur.routes';
+import { filmRouter } from './controller/film.routes';
+import { ticketRouter } from './controller/ticket.routes';
+import { userRouter } from './controller/user.routes';
+import { voorstellingRouter } from './controller/voorstelling.routes';
+import { zaalRouter } from './controller/zaal.routes';
+import { info } from 'console';
+import { title } from 'process';
+import { version } from 'os';
 
 const app = express();
 dotenv.config();
@@ -32,3 +35,17 @@ app.get('/status', (req, res) => {
 app.listen(port || 3000, () => {
     console.log(`Back-end is running on port ${port}.`);
 });
+
+const swaggerOpts = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Cinema API',
+            version: '1.0.0',
+        },
+    },
+    apis: ['./controller/*.routes.ts'], 
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOpts);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

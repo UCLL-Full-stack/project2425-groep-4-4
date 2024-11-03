@@ -9,6 +9,7 @@ export class Zaal {
         this.id = zaal.id
         this.plaatsen = zaal.plaatsen
         this.voorstellingen = zaal.voorstellingen
+        this.validate(zaal)
     }
 
     addVoorstellingToZaal(voorstelling: Voorstelling) {
@@ -26,4 +27,10 @@ export class Zaal {
     getVoorstellingen(): Voorstelling[] {
         return this.voorstellingen
     }
+
+    validate(zaal: {plaatsen: number}) {
+        if (!zaal.plaatsen) {
+            throw new Error("Aantal plaatsen is verplicht")
+        }
+    }   
 }

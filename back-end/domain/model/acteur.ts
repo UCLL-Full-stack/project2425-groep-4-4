@@ -15,6 +15,7 @@ export class Acteur {
         this.nationaliteit = acteur.nationaliteit
         this.geboortedatum = acteur.geboortedatum
         this.films = acteur.films
+        this.validate(acteur)
     }
 
     addFilmToActeur(film: Film) {
@@ -43,5 +44,20 @@ export class Acteur {
 
     getFilms(): Film[] {
         return this.films
+    }
+
+    validate(Acteur: {voornaam: string; achternaam: string; nationaliteit: string; geboortedatum: Date}) {
+        if (!Acteur.voornaam) {
+            throw new Error("Voornaam is verplicht")
+        }
+        if (!Acteur.achternaam) {
+            throw new Error("Achternaam is verplicht")
+        }
+        if (!Acteur.nationaliteit) {
+            throw new Error("Nationaliteit is verplicht")
+        }
+        if (!Acteur.geboortedatum) {
+            throw new Error("Geboortedatum is verplicht")
+        }
     }
 }

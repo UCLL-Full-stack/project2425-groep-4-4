@@ -6,6 +6,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@next/swc-win32-x64-msvc": "^15.0.3",
     "@types/react": "18.0.28",
     "bootstrap": "5.2.3",
     "classnames": "^2.3.2",

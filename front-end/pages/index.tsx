@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Header from '@components/header';
-import styles from '@styles/home.module.css';
+import styles from '../styles/home.module.css';
 import { Film } from '@/types/types';
+import { useState } from 'react';
 
 const Home: React.FC = () => {
-  const [films, setFilms] useState<Array<Film>>([]);
+  const [films, setFilms] = useState<Array<Film>>([]);
   
   return (
     <>
@@ -15,7 +16,7 @@ const Home: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      {/* <Header /> */}
       <main className={styles.main}>
         <span>
           <Image

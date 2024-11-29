@@ -102,13 +102,13 @@ ticketRouter.post('/create', (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-ticketRouter.get('/getAll', (req: Request, res: Response) => {
-    try {
-        const tickets = ticketService.getAllTickets();
-        res.status(200).json(tickets);
-    } catch (error) {
-        res.status(400).json({status: 'error', message: (error as Error).message});
-    }
-})
+// ticketRouter.get('/getAll', async (req: Request, res: Response) => {
+//     try {
+//         const tickets = await ticketService.getAllTickets();
+//         res.status(200).json(tickets);
+//     } catch (error) {
+//         res.status(400).json({status: 'error', message: (error as Error).message});
+//     }
+// })
 
 export { ticketRouter };

@@ -117,10 +117,10 @@ filmRouter.post('/create', (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-filmRouter.get('/getAll', (req: Request, res: Response) => {
+filmRouter.get('/getAll', async (req: Request, res: Response) => {
     try {
-        const tickets = filmService.getAllFilms();
-        res.status(200).json(tickets);
+        const films = await filmService.getAllFilms();
+        res.status(200).json(films);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});
     }

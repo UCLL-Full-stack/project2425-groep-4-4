@@ -28,7 +28,7 @@ model Film {
   speeltijd      Int
   beschrijving   String
   voorstellingen Voorstelling[] 
-  acteurs        Acteur[]        
+  acteurs        Acteur[]       
 }
 
 model Ticket {

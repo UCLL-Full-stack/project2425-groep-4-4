@@ -8,12 +8,12 @@ const createZaal = ({plaatsen}: ZaalInput): Zaal => {
         throw new Error('ZaalInput is niet correct')
     }
 
-    const zaal = new Zaal({plaatsen, voorstellingen: []})
+    const zaal = new Zaal({plaatsen})
 
     return zaalDb.createZaal(zaal)
 }
 
-const getAllZalen = (): Zaal[] => zaalDb.getAllZalen();
+const getAllZalen = async (): Promise<Zaal[]> => zaalDb.getAllZalen();
 
 export default {
     createZaal,

@@ -64,10 +64,10 @@ const zaalRouter = express.Router();
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-zaalRouter.post('/create', (req: Request, res: Response) => {
+zaalRouter.post('/create', async (req: Request, res: Response) => {
     try {
         const zaal = <ZaalInput>req.body;
-        const result = zaalService.createZaal(zaal);
+        const result = await zaalService.createZaal(zaal);
         res.status(200).json(result);
     }
     catch (error) {

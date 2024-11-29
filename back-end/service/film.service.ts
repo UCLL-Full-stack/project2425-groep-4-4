@@ -12,11 +12,11 @@ const createFilm = ({titel, speeltijd, beschrijving}: FilmInput): Film => {
         throw new Error(`Film met titel ${titel} bestaat al`)
     }
 
-    const film = new Film({titel, speeltijd, beschrijving, acteurs: [], voorstellingen: []})
+    const film = new Film({titel, speeltijd, beschrijving, acteurs: []})
     return filmDb.createFilm(film)
 }
 
-const getAllFilms = (): Film[] => filmDb.getAllFilms();
+const getAllFilms = async (): Promise<Film[]> => filmDb.getAllFilms();
 
 export default {
     createFilm,

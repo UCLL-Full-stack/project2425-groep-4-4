@@ -1,5 +1,6 @@
 import { User } from "./user";
 import { Voorstelling } from "./voorstelling";
+import { Ticket as TicketPrisma, User as UserPrisma, Voorstelling as VoorstellingPrisma } from '@prisma/client';
 
 export class Ticket {
     readonly id?: number
@@ -29,5 +30,17 @@ export class Ticket {
         if (!Ticket.voorstelling) {
             throw new Error("Voorstelling is verplicht")
         }
+    }
+
+    static from({
+        id,
+        voorstelling,
+        user,
+    }: TicketPrisma & { voorstelling: VoorstellingPrisma; user: UserPrisma }) {
+        return new Ticket({
+            id,
+            voorstelling: Voorstelling.from(voorstelling),  
+            user: User.from(user)
+        });
     }
 }

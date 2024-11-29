@@ -1,4 +1,5 @@
 import { Film } from "./film"
+import { Film as FilmPrisma, Acteur as ActeurPrisma } from '@prisma/client';
 
 export class Acteur {
     readonly id?: number
@@ -6,20 +7,14 @@ export class Acteur {
     readonly achternaam: string 
     readonly nationaliteit: string
     readonly geboortedatum: Date
-    readonly films: Film[]
 
-    constructor(acteur: {id?: number; voornaam: string; achternaam: string; nationaliteit: string; geboortedatum: Date; films: Film[];}) {
+    constructor(acteur: {id?: number; voornaam: string; achternaam: string; nationaliteit: string; geboortedatum: Date; }) {
         this.id = acteur.id
         this.voornaam = acteur.voornaam
         this.achternaam = acteur.achternaam
         this.nationaliteit = acteur.nationaliteit
         this.geboortedatum = acteur.geboortedatum
-        this.films = acteur.films
         this.validate(acteur)
-    }
-
-    addFilmToActeur(film: Film) {
-        this.films.push(film)
     }
 
     getId(): number | undefined {
@@ -42,10 +37,6 @@ export class Acteur {
         return this.geboortedatum
     }
 
-    getFilms(): Film[] {
-        return this.films
-    }
-
     validate(Acteur: {voornaam: string; achternaam: string; nationaliteit: string; geboortedatum: Date}) {
         if (!Acteur.voornaam) {
             throw new Error("Voornaam is verplicht")
@@ -59,5 +50,21 @@ export class Acteur {
         if (!Acteur.geboortedatum) {
             throw new Error("Geboortedatum is verplicht")
         }
+    }
+
+    static from({
+        id,
+        voornaam,
+        achternaam,
+        nationaliteit,
+        geboortedatum,
+    }: ActeurPrisma) {
+        return new Acteur({
+            id,
+            voornaam,
+            achternaam,
+            nationaliteit,
+            geboortedatum,
+        });
     }
 }

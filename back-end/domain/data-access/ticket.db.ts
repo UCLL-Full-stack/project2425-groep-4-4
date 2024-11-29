@@ -1,4 +1,5 @@
 import { Ticket } from "../model/ticket"
+import database from "./database"
 
 const tickets: Ticket[] = []
 
@@ -8,9 +9,17 @@ const createTicket = ({voorstelling}: Ticket): Ticket => {
     return ticket
 }
 
-const getAllTickets = (): Ticket[] => tickets;
+// const getAllTickets = async (): Promise<Ticket[]> => {
+//     try {
+//         const ticketsPrisma = await database.ticket.findMany({
+//         });
+//         return ticketsPrisma.map((ticketPrisma) => Ticket.from(ticketPrisma))
+//     } catch (error) {
+//         throw new Error(`Database error. See server log for details.`);
+//     }
+// };
 
 export default {
     createTicket,
-    getAllTickets
+    // getAllTickets
 }

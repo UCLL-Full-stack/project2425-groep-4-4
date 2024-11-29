@@ -12,11 +12,11 @@ const createActeur = ({voornaam, achternaam, nationaliteit, geboortedatum}: Acte
         throw new Error(`Acteur met voornaam ${voornaam} en achternaam ${achternaam} bestaat al`)
     }
 
-    const acteur = new Acteur({voornaam, achternaam, nationaliteit, geboortedatum, films: []})
+    const acteur = new Acteur({voornaam, achternaam, nationaliteit, geboortedatum})
     return acteurDb.createActeur(acteur)
 }
 
-const getAllActeurs = (): Acteur[] => acteurDb.getAllActeurs();
+const getAllActeurs = async (): Promise<Acteur[]> => acteurDb.getAllActeurs();
 
 const getActeurByFullName = (voornaam: string, achternaam: string): Acteur => {
     const acteur = acteurDb.getActeurByFullName(voornaam, achternaam)

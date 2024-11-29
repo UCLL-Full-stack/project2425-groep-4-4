@@ -2,6 +2,7 @@ import { th } from "date-fns/locale"
 import { Film } from "./film"
 import { Ticket } from "./ticket"
 import { Voorstelling } from "./voorstelling"
+import { User as UserPrisma, Ticket as TicketPrisma } from '@prisma/client';
 
 export class User {
     readonly id?: number
@@ -10,21 +11,15 @@ export class User {
     readonly achternaam: string
     readonly email: string
     readonly password: string
-    readonly tickets: Ticket[]
 
-    constructor(user: {id?: number; admin: boolean; voornaam: string; achternaam: string; email: string; password: string; tickets: Ticket[];}) {
+    constructor(user: {id?: number; admin: boolean; voornaam: string; achternaam: string; email: string; password: string;}) {
         this.id = user.id
         this.admin = user.admin
         this.voornaam = user.voornaam
         this.achternaam = user.achternaam
         this.email = user.email
         this.password = user.password
-        this.tickets = user.tickets
         this.validate(user)
-    }
-
-    addTicketToUser(ticket: Ticket) {
-        this.tickets.push(ticket)
     }
 
     getId(): number | undefined {
@@ -51,10 +46,6 @@ export class User {
         return this.password
     }
 
-    getTickets(): Ticket[] {
-        return this.tickets
-    }
-
     validate(User: {admin: boolean; voornaam: string; achternaam: string; email: string; password: string}) {
         if (!User.voornaam) {
             throw new Error("Voornaam is verplicht")
@@ -78,5 +69,23 @@ export class User {
         if (!emailRegex.test(User.email)) {
             throw new Error("Email is niet geldig");
         }
+    }
+
+    static from({
+        id,
+        admin,
+        voornaam,
+        achternaam,
+        email,
+        password,
+    }: UserPrisma) {
+        return new User({
+            id,
+            admin,
+            voornaam,
+            achternaam,
+            email,
+            password,
+        });
     }
 }

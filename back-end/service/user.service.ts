@@ -12,12 +12,15 @@ const createUser = ({admin, voornaam, achternaam, email, password}: UserInput): 
         throw new Error(`User met email ${email} bestaat al`)
     }
 
-    const user = new User({admin, voornaam, achternaam, email, password, tickets: []})
+    const user = new User({admin, voornaam, achternaam, email, password})
     
     return userDb.createUser(user)
 }
 
-const getAllUsers = (): User[] => userDb.getAllUsers();
+const getAllUsers = async (): Promise<User[]> => {
+    const users = await userDb.getAllUsers();
+    return users;
+}
 
 export default {
     createUser,

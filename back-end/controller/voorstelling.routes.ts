@@ -115,9 +115,9 @@ voorstellingRouter.post('/create', (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-voorstellingRouter.get('/getAll', (req: Request, res: Response) => {
+voorstellingRouter.get('/getAll', async (req: Request, res: Response) => {
     try {
-        const voorstellingen = voorstellingService.getAllVoorstellingen();
+        const voorstellingen = await voorstellingService.getAllVoorstellingen();
         res.status(200).json(voorstellingen);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});

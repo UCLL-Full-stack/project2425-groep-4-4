@@ -1,9 +1,10 @@
 import { Film } from "../model/film"
+import database from "./database"
 
 const films: Film[] = []
 
 const createFilm = ({titel, speeltijd, beschrijving}: Film): Film => {
-    const film = new Film({titel, speeltijd, beschrijving, acteurs: [], voorstellingen: []})
+    const film = new Film({titel, speeltijd, beschrijving, acteurs: []})
     films.push(film)
     return film
 }
@@ -21,7 +22,18 @@ const getFilmByName = (titel: string): Film | undefined => {
 }
 
 
-const getAllFilms = (): Film[] => films;
+const getAllFilms = async(): Promise<Film[]> => {
+    try {
+        const filmsPrisma = await database.film.findMany({
+            include: {
+                acteurs: true,
+            }
+        });
+        return filmsPrisma.map((filmPrisma) => Film.from(filmPrisma))
+    } catch (error) {
+        throw new Error(`Database error. See server log for details.`);
+    }
+};
 
 export default {
     createFilm,

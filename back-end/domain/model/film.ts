@@ -1,27 +1,22 @@
 import { Acteur } from "./acteur";
 import { Voorstelling } from "./voorstelling";
+import { Film as FilmPrisma, Acteur as ActeurPrisma, Voorstelling as VoorstellingPrisma } from '@prisma/client';
 
 export class Film {
     readonly id?: number
     readonly titel: string
     readonly speeltijd: number
     readonly beschrijving: string
-    readonly voorstellingen: Voorstelling[]
     readonly acteurs: Acteur[]
     
 
-    constructor(film: {id?: number; titel: string; speeltijd: number; beschrijving: string; voorstellingen: Voorstelling[]; acteurs: Acteur[];}) {
+    constructor(film: {id?: number; titel: string; speeltijd: number; beschrijving: string; acteurs: Acteur[];}) {
         this.id = film.id
         this.titel = film.titel
         this.speeltijd = film.speeltijd
         this.beschrijving = film.beschrijving
-        this.voorstellingen = film.voorstellingen || []
         this.acteurs = film.acteurs || []
         this.validate(film)
-    }
-
-    addVoorstellingToFilm(voorstelling: Voorstelling) {
-        this.voorstellingen.push(voorstelling)
     }
 
     addActeurToFilm(acteur: Acteur) {
@@ -44,10 +39,6 @@ export class Film {
         return this.beschrijving
     }
 
-    getVoorstellingen(): Voorstelling[] {
-        return this.voorstellingen
-    }
-
     getActeurs(): Acteur[] {
         return this.acteurs
     }
@@ -68,5 +59,21 @@ export class Film {
         if (Film.beschrijving.length < 20) {
             throw new Error("Beschrijving moet minstens 20 karakters bevatten")
         }
+    }
+
+    static from({
+        id,
+        titel,
+        speeltijd,
+        beschrijving,
+        acteurs,
+    }: FilmPrisma & { acteurs: ActeurPrisma[]; }) {
+        return new Film({
+            id,
+            titel,
+            speeltijd,
+            beschrijving,
+            acteurs: acteurs.map((acteur) => Acteur.from(acteur)),
+        });
     }
 }

@@ -117,9 +117,9 @@ acteurRouter.post('/create', (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-acteurRouter.get('/getAll', (req: Request, res: Response) => {
+acteurRouter.get('/getAll', async (req: Request, res: Response) => {
     try {
-        const acteurs = acteurService.getAllActeurs();
+        const acteurs = await acteurService.getAllActeurs();
         res.status(200).json(acteurs);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});

@@ -3,10 +3,33 @@ import Image from 'next/image';
 import Header from '@components/header';
 import styles from '../styles/home.module.css';
 import { Film } from '@/types/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import filmService from '@/service/filmService';
+import FilmOverview from '@/components/film-overview';
 
 const Home: React.FC = () => {
-  const [films, setFilms] = useState<Array<Film>>([]);
+  const [films, setFilms] = useState<Array<Film>>();
+  const [error, setError] = useState<String>();
+
+  const getFilms = async () => {
+    setError("");
+
+    const responses = await Promise.all([
+      filmService.getAllFilms()
+    ]);
+    const [filmResponse] = responses;
+    const films = await filmResponse.json();
+    
+    if(filmResponse.status !== 200){
+      setError(films.errorMessage);
+    }
+
+    setFilms(films);
+  };
+
+  useEffect(() => {
+    getFilms();
+  });
   
   return (
     <>
@@ -28,15 +51,14 @@ const Home: React.FC = () => {
           />
           <h1>Welcome!</h1>
         </span>
-
-        <div className={styles.description}>
-          <p>
-            Courses lets you see as a lecturer all the courses you are teaching
-            and as a student all the courses you are enrolled in. <br />
-            You can also see when the courses are scheduled and the students
-            enrolled in each course.
-          </p>
-        </div>
+        <>
+          {error && <div>{error}</div>}
+          {films && (
+            <FilmOverview
+              films={films}
+            />
+          )}
+        </>
       </main>
     </>
   );

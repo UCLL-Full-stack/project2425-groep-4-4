@@ -19,11 +19,6 @@ const Home: React.FC = () => {
     ]);
     const [filmResponse] = responses;
     const films = await filmResponse.json();
-    
-    if(filmResponse.status !== 200){
-      setError(films.errorMessage);
-    }
-
     setFilms(films);
   };
 

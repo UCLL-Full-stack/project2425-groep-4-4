@@ -5,7 +5,8 @@ import styles from '../styles/home.module.css';
 import { Film } from '@/types/types';
 import { useEffect, useState } from 'react';
 import filmService from '@/service/filmService';
-import FilmOverview from '@/components/film-overview';
+import FilmOverview from '@/components/FilmOverview';
+import useInterval from 'use-interval';
 
 const Home: React.FC = () => {
   const [films, setFilms] = useState<Array<Film>>();
@@ -24,7 +25,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getFilms();
-  });
+  }, []);
+
+  useInterval(() => {
+    getFilms();
+  }, 5000)
   
   return (
     <>
@@ -47,12 +52,9 @@ const Home: React.FC = () => {
           <h1>Welcome!</h1>
         </span>
         <>
-          {error && <div>{error}</div>}
-          {films && (
-            <FilmOverview
-              films={films}
-            />
-          )}
+          <FilmOverview
+            films={films}
+          />
         </>
       </main>
     </>

@@ -6,12 +6,16 @@ type Props = {
 };
 
 const FilmOverview: React.FC<Props> = ({ films }: Props) => {
+    if (!films || films.length === 0) {
+        return <p>Geen films beschikbaar.</p>;
+    }
+    
     return (
         <div>
             <h2>Films</h2>
             <ul>
                 {films.map((film, index) => (
-                    <li key={film.id}>{film.titel}</li>
+                    <li>{film.titel} - {film.speeltijd}min - {film.beschrijving}</li>
                 ))}
             </ul>
         </div>

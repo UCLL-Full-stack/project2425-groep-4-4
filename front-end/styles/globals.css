@@ -249,3 +249,9 @@ button:hover {
   width: 100%;
   z-index: 2;
 }
+
+.cover-img {
+  width: 20rem;
+  height: auto;
+  border-radius: 1.5rem;
+}

@@ -29,8 +29,8 @@ const ReadFilmById = () => {
     }
 
     return (
-        <div className="container">
-            <img className="poster" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
+        <div className="container flex">
+            <img className="cover-img" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
             <div>
                 <h1>{film.titel}</h1>
                 <p>{film.beschrijving}</p>

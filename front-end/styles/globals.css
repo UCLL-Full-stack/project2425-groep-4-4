@@ -126,6 +126,15 @@ a {
   flex-wrap: wrap;
 }
 
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-content {
+  justify-content: center;
+}
+
 h1 {
   font-size: 4rem;
   font-weight: 700;

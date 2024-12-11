@@ -11,19 +11,17 @@ const FilmOverview: React.FC<Props> = ({ films }: Props) => {
     }
     
     return (
-        <div>
-            <div className="flex wrap">
-                {films.map((film, index) => (
-                    <div className="card">
-                        <div className="poster">
-                            <img src={`./images/cover-${film.id}.jpg`} alt="movie cover" />
-                        </div>
-                        <div className="details">
-                            <p className="movie-title">{film.titel}</p>
-                        </div>
+        <div className="flex wrap center-content">
+            {films.map((film, index) => (
+                <div className="card">
+                    <div className="poster">
+                        <img src={`./images/cover-${film.id}.jpg`} alt="movie cover" />
                     </div>
-                ))}
-            </div>
+                    <div className="details">
+                        <p className="movie-title">{film.titel}</p>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };

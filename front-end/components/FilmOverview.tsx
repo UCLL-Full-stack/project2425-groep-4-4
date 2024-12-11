@@ -16,7 +16,7 @@ const FilmOverview: React.FC<Props> = ({ films }: Props) => {
                 {films.map((film, index) => (
                     <div className="card">
                         <div className="poster">
-                            <img src="./images/movie-cover.jpg" alt="movie cover" />
+                            <img src={`./images/cover-${film.id}.jpg`} alt="movie cover" />
                         </div>
                         <div className="details">
                             <p className="movie-title">{film.titel}</p>

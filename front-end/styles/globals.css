@@ -139,6 +139,11 @@ main {
   justify-content: center;
 }
 
+.end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 h1 {
   font-size: 4rem;
   font-weight: 700;
@@ -163,6 +168,22 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #131313;
+}
+
+.header-section {
+  width: 20%;
+}
+
+.header a {
+  color: white;
+  font-weight: 600;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.header a:hover {
+  border-bottom: #46AAFE solid;
 }
 
 .logo-container {

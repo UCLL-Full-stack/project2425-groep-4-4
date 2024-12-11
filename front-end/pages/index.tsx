@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import filmService from '@/service/filmService';
 import FilmOverview from '@/components/FilmOverview';
 import useInterval from 'use-interval';
+import { useRouter } from 'next/router';
 
 const Home: React.FC = () => {
   const [films, setFilms] = useState<Array<Film>>();

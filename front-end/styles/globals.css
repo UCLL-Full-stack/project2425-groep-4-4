@@ -211,6 +211,7 @@ button:hover {
 .card:hover {
   transform: translateY(-15px);
   transition: transform 0.3s;
+  cursor: pointer;
 }
 
 .card .poster {

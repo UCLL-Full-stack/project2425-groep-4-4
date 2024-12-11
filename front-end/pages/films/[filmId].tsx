@@ -30,11 +30,11 @@ const ReadFilmById = () => {
 
     return (
         <div className="container">
-            <img src={`./images/cover-${film.id}.jpg`} alt="movie cover" />
+            <img className="poster" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
             <div>
                 <h1>{film.titel}</h1>
                 <p>{film.beschrijving}</p>
-                <p>Duur: {film.speeltijd}</p>
+                <p>Duur: {film.speeltijd}min</p>
                 <p>Acteurs: {film.acteurs?.join(", ")}</p>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { Film } from "@/types/types";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
 const readFilmById = () => {
@@ -7,6 +7,11 @@ const readFilmById = () => {
 
     const router = useRouter()
     const { filmId } = router.query
+
+    useEffect( () => {
+        if (filmId)
+            getFilmbyId()
+    })
 
 
     return (

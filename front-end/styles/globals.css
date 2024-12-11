@@ -255,3 +255,19 @@ button:hover {
   height: auto;
   border-radius: 1.5rem;
 }
+
+.details-container {
+  gap: 1rem;
+  max-width: 50rem;
+  margin-top: 3rem;
+  border-radius: 1.5rem;
+  background-color: rgb(28, 28, 28);
+}
+
+.details-content {
+  padding: 1rem;
+}
+
+.details-item {
+  margin-bottom: 1rem;
+}

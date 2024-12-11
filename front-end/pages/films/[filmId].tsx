@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import filmService from "@/service/filmService";
 import { Film } from "@/types/types";
 import { useRouter } from "next/router";
@@ -29,15 +30,18 @@ const ReadFilmById = () => {
     }
 
     return (
-        <div className="container flex">
-            <img className="cover-img" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
-            <div>
-                <h1>{film.titel}</h1>
-                <p>{film.beschrijving}</p>
-                <p>Duur: {film.speeltijd}min</p>
-                <p>Acteurs: {film.acteurs?.join(", ")}</p>
+        <>
+            <Header />
+            <div className="container flex details-container">
+                <img className="cover-img" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
+                <div className="details-content">
+                    <h1>{film.titel}</h1>
+                    <p className="details-item">{film.beschrijving}</p>
+                    <p className="details-item">Duur: {film.speeltijd}min</p>
+                    <p className="details-item">Acteurs: {film.acteurs?.join(", ")}</p>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

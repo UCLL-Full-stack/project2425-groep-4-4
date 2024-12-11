@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import Header from '@components/header';
+import Header from '../components/Header';
 import styles from '../styles/home.module.css';
 import { Film } from '@/types/types';
 import { useEffect, useState } from 'react';
@@ -39,17 +39,10 @@ const Home: React.FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Header /> */}
+      <Header />
       <main className={styles.main}>
         <span>
-          <Image
-            src="/images/logo.png"
-            alt="CineFlex Logo"
-            className={styles.vercelLogo}
-            width={50}
-            height={50}
-          />
-          <h1>Welcome!</h1>
+          <h1>All Movies</h1>
         </span>
         <>
           <FilmOverview

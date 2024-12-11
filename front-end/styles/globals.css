@@ -104,12 +104,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #010a1a;
 }
 
 a {
@@ -121,4 +116,58 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.flex {
+  display: flex;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #46AAFE;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #46AAFE;
+}
+
+h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #46AAFE;
+}
+
+.header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 3rem;
+}
+
+.button {
+  padding: 0.5rem 2rem;
+  border-radius: var(--border-radius);
+  background-color: #0071ff;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.navigation ul {
+  display: flex;
+  gap: 3rem;
+  list-style-type: none;
 }

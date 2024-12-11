@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Acteur {
+  id             Int       @id @default(autoincrement())
+  voornaam       String
+  achternaam     String
+  nationaliteit  String
+  geboortedatum  DateTime
+  films          Film[]    
+}
+
+model Film {
+  id             Int             @id @default(autoincrement())
+  titel          String
+  speeltijd      Int
+  beschrijving   String
+  voorstellingen Voorstelling[] 
+  acteurs        Acteur[]       
+}
+
+model Ticket {
+  id           Int          @id @default(autoincrement())
+  voorstelling Voorstelling  @relation(fields: [voorstellingId], references: [id])
+  user         User?        @relation(fields: [userId], references: [id])
+  voorstellingId Int
+  userId        Int?
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  admin     Boolean
+  voornaam  String
+  achternaam String
+  email     String    @unique
+  password  String
+  tickets   Ticket[]  
+}
+
+model Voorstelling {
+  id           Int         @id @default(autoincrement())
+  datum        DateTime
+  tijdstip     String
+  zaal         Zaal        @relation(fields: [zaalId], references: [id])
+  film         Film        @relation(fields: [filmId], references: [id])
+  tickets      Ticket[]    
+  zaalId       Int
+  filmId       Int
+}
+
+model Zaal {
+  id           Int           @id @default(autoincrement())
+  plaatsen     Int
+  voorstellingen Voorstelling[]
+}

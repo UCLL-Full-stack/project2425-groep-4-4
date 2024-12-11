@@ -163,12 +163,18 @@ h3 {
 
 .button {
   padding: 0.5rem 2rem;
-  border-radius: var(--border-radius);
+  border: none;
+  border-radius: 5rem;
   background-color: #0071ff;
   color: white;
-  font-weight: 500;
+  font-family: "InterVariable";
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 .navigation ul {

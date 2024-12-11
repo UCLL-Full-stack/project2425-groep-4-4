@@ -32,15 +32,17 @@ const ReadFilmById = () => {
     return (
         <>
             <Header />
-            <div className="container flex details-container">
-                <img className="cover-img" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
-                <div className="details-content">
-                    <h1>{film.titel}</h1>
-                    <p className="details-item">{film.beschrijving}</p>
-                    <p className="details-item">Duur: {film.speeltijd}min</p>
-                    <p className="details-item">Acteurs: {film.acteurs?.join(", ")}</p>
+            <main>
+                <div className="container flex details-container">
+                    <img className="cover-img" src={`/images/cover-${film.id}.jpg`} alt="movie cover" />
+                    <div className="details-content">
+                        <h1>{film.titel}</h1>
+                        <p className="details-item">{film.beschrijving}</p>
+                        <p className="details-item">Duur: {film.speeltijd}min</p>
+                        <p className="details-item">Acteurs: {film.acteurs?.join(", ")}</p>
+                    </div>
                 </div>
-            </div>
+            </main>
         </>
     );
 };

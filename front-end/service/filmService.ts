@@ -9,7 +9,7 @@ const getAllFilms = async () => {
 };
 
 const getFilmById = async (id: number) => {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/film/getById/' + id, {
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/film/' + id, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',

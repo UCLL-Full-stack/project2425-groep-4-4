@@ -126,4 +126,56 @@ filmRouter.get('/getAll', async (req: Request, res: Response) => {
     }
 })
 
+/**
+ * @swagger
+ * /film/{id}:
+ *   get:
+ *     summary: Retrieve a film by its ID
+ *     tags: [Films]
+ *     description: Fetches a film from the database using its unique ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The unique ID of the film to retrieve
+ *     responses:
+ *       200:
+ *         description: A film object
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: The film ID
+ *                 title:
+ *                   type: string
+ *                   description: The title of the film
+ *                 description:
+ *                   type: string
+ *                   description: The description of the film
+ *                 releaseDate:
+ *                   type: string
+ *                   format: date
+ *                   description: The release date of the film
+ *                 genre:
+ *                   type: string
+ *                   description: The genre of the film
+ *       404:
+ *         description: Film not found
+ *       500:
+ *         description: Internal server error
+ */
+filmRouter.get('/:id', async (req: Request, res: Response) => {
+    try {
+        const film = await filmService.getFilmById(Number(req.params.id));
+        res.status(200).json(film);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
 export { filmRouter };

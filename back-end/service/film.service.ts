@@ -18,7 +18,14 @@ const createFilm = ({titel, speeltijd, beschrijving}: FilmInput): Film => {
 
 const getAllFilms = async (): Promise<Film[]> => filmDb.getAllFilms();
 
+const getFilmById = async (id: number): Promise<Film> => {
+    const film = await filmDb.getFilmById({ id });
+    if (!film) throw new Error(`Film with id ${id} does not exist.`);
+    return film;
+};
+
 export default {
     createFilm,
-    getAllFilms
+    getAllFilms,
+    getFilmById
 }

@@ -9,13 +9,19 @@ const createFilm = ({titel, speeltijd, beschrijving}: Film): Film => {
     return film
 }
 
-const getFilmById = (id: number): Film => {
-    const film = films.find(film => film.id === id)
-    if (!film) {
-        throw new Error(`film met id ${id} niet gevonden`)
+const getFilmById = async ({ id }: { id: number }): Promise<Film | null> => {
+    try {
+        const filmPrisma = await database.film.findUnique({
+            where: { id },
+            include: { acteurs: true}
+        });
+
+        return filmPrisma ? Film.from(filmPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
     }
-    return film
-}
+};
 
 const getFilmByName = (titel: string): Film | undefined => {
     return films.find(film => film.titel === titel)

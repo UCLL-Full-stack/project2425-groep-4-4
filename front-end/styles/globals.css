@@ -122,10 +122,15 @@ a {
   display: flex;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 h1 {
   font-size: 4rem;
   font-weight: 700;
   color: #46AAFE;
+  margin-bottom: 3rem;
 }
 
 h2 {
@@ -170,4 +175,56 @@ h3 {
   display: flex;
   gap: 3rem;
   list-style-type: none;
+}
+
+.card {
+  width: 320px;
+  height: 450px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  margin: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-15px);
+  transition: transform 0.3s;
+}
+
+.card .poster {
+  position: relative;
+  overflow: hidden;
+
+}
+
+.card .poster::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, #1064a6 50%, transparent);
+  bottom: -180px;
+  z-index: 1;
+}
+
+.card .poster img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.movie-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem;
+}
+
+.card .details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  width: 100%;
+  z-index: 2;
 }

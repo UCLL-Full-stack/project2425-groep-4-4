@@ -1,5 +1,5 @@
 import { Film } from "@/types/types";
-
+import React from "react";
 
 type Props = {
     films: Array<Film>;
@@ -12,12 +12,18 @@ const FilmOverview: React.FC<Props> = ({ films }: Props) => {
     
     return (
         <div>
-            <h2>Films</h2>
-            <ul>
+            <div className="flex wrap">
                 {films.map((film, index) => (
-                    <li>{film.titel} - {film.speeltijd}min - {film.beschrijving}</li>
+                    <div className="card">
+                        <div className="poster">
+                            <img src="./images/movie-cover.jpg" alt="movie cover" />
+                        </div>
+                        <div className="details">
+                            <p className="movie-title">{film.titel}</p>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

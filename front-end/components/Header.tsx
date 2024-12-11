@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <header className="header flex">
       <div className="flex logo-container">
-        <img className='logo' src="/images/logo.png" alt="Cineflex Logo" />
+        <img className='logo' src="./images/logo.png" alt="Cineflex Logo" />
         <h2>Cineflex</h2>
       </div>
       <nav className="navigation">

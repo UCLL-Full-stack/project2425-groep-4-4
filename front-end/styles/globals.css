@@ -192,9 +192,14 @@ button:hover {
   list-style-type: none;
 }
 
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
 .card {
-  width: 320px;
-  height: 450px;
+  width: 256px;
+  height: 360px;
   background-color: rgb(59, 59, 59);
   border-radius: 10px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
@@ -220,7 +225,7 @@ button:hover {
   width: 100%;
   height: 100%;
   background: linear-gradient(0deg, #1064a6 50%, transparent);
-  bottom: -180px;
+  bottom: -120px;
   z-index: 1;
 }
 
@@ -230,7 +235,7 @@ button:hover {
 }
 
 .movie-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin: 1rem;
 }

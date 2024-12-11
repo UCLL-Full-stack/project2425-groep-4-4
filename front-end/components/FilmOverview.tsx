@@ -11,7 +11,7 @@ const FilmOverview: React.FC<Props> = ({ films }: Props) => {
     }
     
     return (
-        <div className="flex wrap center-content">
+        <div className="flex wrap center-content container">
             {films.map((film, index) => (
                 <div className="card">
                     <div className="poster">

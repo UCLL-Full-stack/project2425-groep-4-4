@@ -210,7 +210,20 @@ h3 {
   transition: 0.2s;
 }
 
-button:hover {
+.button-big {
+  padding: 1rem 4rem;
+  border: none;
+  border-radius: 5rem;
+  background-color: #0071ff;
+  color: white;
+  font-family: "InterVariable";
+  font-size: large;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button:hover, .button-big:hover {
   background-color: #0056b3;
 }
 

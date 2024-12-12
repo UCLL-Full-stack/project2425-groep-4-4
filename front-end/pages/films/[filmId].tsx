@@ -38,8 +38,8 @@ const ReadFilmById = () => {
                     <div className="details-content">
                         <h1>{film.titel}</h1>
                         <p className="details-item">{film.beschrijving}</p>
-                        <p className="details-item">Duur: {film.speeltijd}min</p>
-                        <p className="details-item">Acteurs: {film.acteurs?.join(", ")}</p>
+                        <p className="details-item">Duration: {film.speeltijd}min</p>
+                        <p className="details-item">Actors: {film.acteurs?.join(", ")}</p>
                         <button className="button-big">Buy Tickets</button>
                     </div>
                 </div>

@@ -176,6 +176,7 @@ h3 {
 
 .header-section {
   width: 20%;
+  min-width: max-content;
 }
 
 .header a {

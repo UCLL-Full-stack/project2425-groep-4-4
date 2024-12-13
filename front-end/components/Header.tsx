@@ -5,7 +5,7 @@ const Header = () => {
     <header className="header flex wrap">
       <div className="flex logo-container header-section">
         <img className='logo' src="/images/logo.png" alt="Cineflex Logo" />
-        <h2>Cineflex</h2>
+        <a href="/"><h2>Cineflex</h2></a>
       </div>
       <nav className="navigation">
         <ul className='flex wrap'>

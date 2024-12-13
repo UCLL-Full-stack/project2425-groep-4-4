@@ -215,14 +215,14 @@ h3 {
   min-width: max-content;
 }
 
-.header a {
+.header nav a {
   color: white;
   font-weight: 600;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-.header a:hover {
+.header nav a:hover {
   border-bottom: #46AAFE solid;
 }
 

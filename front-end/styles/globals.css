@@ -122,6 +122,21 @@ main {
   padding-top: 8rem !important;
 }
 
+.main-index {
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  background-image: url('../public/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
 .flex {
   display: flex;
 }

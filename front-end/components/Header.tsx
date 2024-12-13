@@ -9,7 +9,7 @@ const Header = () => {
       </div>
       <nav className="navigation">
         <ul className='flex wrap'>
-          <li><a href="/">All Movies</a></li>
+          <li><a href="/allMovies">All Movies</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>

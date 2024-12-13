@@ -9,7 +9,7 @@ import FilmOverview from '@/components/FilmOverview';
 import useInterval from 'use-interval';
 import { useRouter } from 'next/router';
 
-const Home: React.FC = () => {
+const allMovies: React.FC = () => {
   const [films, setFilms] = useState<Array<Film>>();
   const [error, setError] = useState<String>();
 
@@ -41,13 +41,18 @@ const Home: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="main-index">
-        <div>
-          <h1>test</h1>
-        </div>
+      <main className={styles.main}>
+        <span>
+          <h1>All Movies</h1>
+        </span>
+        <>
+          <FilmOverview
+            films={films}
+          />
+        </>
       </main>
     </>
   );
 };
 
-export default Home;
+export default allMovies;

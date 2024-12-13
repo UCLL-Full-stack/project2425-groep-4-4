@@ -7,9 +7,9 @@ const Header = () => {
         <img className='logo' src="/images/logo.png" alt="Cineflex Logo" />
         <h2>Cineflex</h2>
       </div>
-      <nav className="navigation header-section">
+      <nav className="navigation">
         <ul className='flex'>
-          <li><a href="/">Home</a></li>
+          <li><a href="/">All Movies</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>

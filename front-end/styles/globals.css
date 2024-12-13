@@ -228,6 +228,7 @@ h3 {
 }
 
 .navigation ul {
+  width: max-content;
   display: flex;
   gap: 3rem;
   list-style-type: none;

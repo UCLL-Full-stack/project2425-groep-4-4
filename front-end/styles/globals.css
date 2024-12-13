@@ -169,6 +169,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   background-color: #131313;
+  border-bottom: #46AAFE solid 1px;
   position: fixed;
   width: 100%;
   z-index: 3;

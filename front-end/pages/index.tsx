@@ -42,8 +42,11 @@ const Home: React.FC = () => {
       </Head>
       <Header />
       <main className="main-index">
-        <div>
-          <h1>test</h1>
+        <div className='center-text index-content'>
+          <h2 className='text-white'>Welcome to</h2>
+          <h1 className='no-margin'>Cineflex</h1>
+          <h2 className='text-white'>Discover new movies and series</h2>
+          <div className='button-big margin-top'><a href='/allMovies'>See Movies</a></div>
         </div>
       </main>
     </>

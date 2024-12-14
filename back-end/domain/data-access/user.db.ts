@@ -15,10 +15,12 @@ const getUserByEmail = (email: string): User | undefined => {
 
 const getAllUsers = async (): Promise<User[]> => {
     try {
-        const usersPrisma = await database.user.findMany({ take: 2 });
-        console.log(usersPrisma.length)
-        return usersPrisma.map((userPrisma) => {console.log(userPrisma); return User.from(userPrisma)})
+        console.log("Running database query...");
+        const usersPrisma = await database.user.findMany();
+        console.log("Users fetched:", usersPrisma);
+        return usersPrisma.map((userPrisma: any) => User.from(userPrisma));
     } catch (error) {
+        console.error("Database error:", error);
         throw new Error(`Database error. See server log for details.`);
     }
 };

@@ -7,10 +7,10 @@ export class Ticket {
     readonly voorstelling: Voorstelling
     readonly user?: User
 
-    constructor(ticket: {id?: number; voorstelling: Voorstelling; user?: User;}) {
+    constructor(ticket: {id?: number; voorstelling: Voorstelling; user?: User | null;}) {
         this.id = ticket.id
         this.voorstelling = ticket.voorstelling
-        this.user = ticket.user
+        this.user = ticket.user ?? undefined
         this.validate(ticket)
     }
 
@@ -36,11 +36,11 @@ export class Ticket {
         id,
         voorstelling,
         user,
-    }: TicketPrisma & { voorstelling: VoorstellingPrisma; user: UserPrisma }) {
+    }: TicketPrisma & { voorstelling: VoorstellingPrisma; user: UserPrisma | null}) {
         return new Ticket({
             id,
             voorstelling: Voorstelling.from(voorstelling),  
-            user: User.from(user)
+            user: user ? User.from(user) : undefined
         });
     }
 }

@@ -9,17 +9,21 @@ const createTicket = ({voorstelling}: Ticket): Ticket => {
     return ticket
 }
 
-// const getAllTickets = async (): Promise<Ticket[]> => {
-//     try {
-//         const ticketsPrisma = await database.ticket.findMany({
-//         });
-//         return ticketsPrisma.map((ticketPrisma) => Ticket.from(ticketPrisma))
-//     } catch (error) {
-//         throw new Error(`Database error. See server log for details.`);
-//     }
-// };
+const getAllTickets = async (): Promise<Ticket[]> => {
+    try {
+        const ticketsPrisma = await database.ticket.findMany({
+            include: {
+                voorstelling: true,
+                user: true
+            }
+        });
+        return ticketsPrisma.map((ticketPrisma) => Ticket.from(ticketPrisma))
+    } catch (error) {
+        throw new Error(`Database error. See server log for details.`);
+    }
+};
 
 export default {
     createTicket,
-    // getAllTickets
+    getAllTickets
 }

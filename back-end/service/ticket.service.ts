@@ -19,9 +19,9 @@ const createTicket = ({voorstelling: VoorstellingInput}: TicketInput): Ticket =>
     return ticketDb.createTicket(ticket)
 }
 
-// const getAllTickets = async (): Promise<Ticket[]> => ticketDb.getAllTickets(); 
+const getAllTickets = async (): Promise<Ticket[]> => ticketDb.getAllTickets(); 
 
 export default {
     createTicket,
-    // getAllTickets
+    getAllTickets
 }

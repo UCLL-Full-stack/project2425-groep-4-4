@@ -123,6 +123,8 @@ userRouter.post('/create', (req: Request, res: Response) => {
 userRouter.get('/getAll', async (req: Request, res: Response) => {
     try {
         const users = await userService.getAllUsers();
+        console.log("controller:");
+        console.log(users);
         res.status(200).json(users);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});

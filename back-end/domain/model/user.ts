@@ -50,8 +50,8 @@ export class User {
         if (!User.voornaam) {
             throw new Error("Voornaam is verplicht")
         }
-        if (!User.admin) {
-            throw new Error("adminveld is verplicht")
+        if (typeof User.admin !== 'boolean') {
+            throw new Error('adminveld is verplicht');
         }
         if (!User.achternaam) {
             throw new Error("Achternaam is verplicht")

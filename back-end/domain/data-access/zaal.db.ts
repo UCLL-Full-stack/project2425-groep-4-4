@@ -21,6 +21,7 @@ const getZaalById = (id: number): Zaal => {
 const getAllZalen = async (): Promise<Zaal[]> => {
     try {
         const zalenPrisma = await database.zaal.findMany();
+        console.log(zalenPrisma)
         return zalenPrisma.map((zaalPrisma) => Zaal.from(zaalPrisma))
     } catch (error) {
         throw new Error(`Database error. See server log for details.`);

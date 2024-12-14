@@ -50,9 +50,6 @@ export class Voorstelling {
         if (!voorstelling.datum) {
             throw new Error("Datum is verplicht")
         }
-        if (voorstelling.datum < new Date()) {
-            throw new Error("Datum moet in de toekomst liggen")
-        }
         if (!voorstelling.tijdstip) {
             throw new Error("Tijdstip is verplicht")
         }

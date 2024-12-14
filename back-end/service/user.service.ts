@@ -18,9 +18,17 @@ const createUser = ({admin, voornaam, achternaam, email, password}: UserInput): 
 }
 
 const getAllUsers = async (): Promise<User[]> => {
-    const users = await userDb.getAllUsers();
-    return users;
-}
+    try {
+        console.log("Before fetching users");  // Toevoegen voor debugging
+        const users = await userDb.getAllUsers();
+        console.log("service:");
+        console.log(users);
+        return users;
+    } catch (error) {
+        console.error("Error in getAllUsers:", error);
+        throw error;
+    }
+};
 
 export default {
     createUser,

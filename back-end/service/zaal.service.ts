@@ -13,7 +13,11 @@ const createZaal = ({plaatsen}: ZaalInput): Zaal => {
     return zaalDb.createZaal(zaal)
 }
 
-const getAllZalen = async (): Promise<Zaal[]> => zaalDb.getAllZalen();
+const getAllZalen = async (): Promise<Zaal[]> => {
+    const zalen = await zaalDb.getAllZalen();
+    console.log(zalen)
+    return zalen
+}
 
 export default {
     createZaal,

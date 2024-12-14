@@ -104,9 +104,9 @@ zaalRouter.post('/create', async (req: Request, res: Response) => {
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-zaalRouter.get('/getAll', (req: Request, res: Response) => {
+zaalRouter.get('/getAll', async (req: Request, res: Response) => {
     try {
-        const zalen = zaalService.getAllZalen();
+        const zalen = await zaalService.getAllZalen();
         res.status(200).json(zalen);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});

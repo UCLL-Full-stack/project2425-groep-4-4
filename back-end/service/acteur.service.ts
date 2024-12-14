@@ -16,7 +16,12 @@ const createActeur = ({voornaam, achternaam, nationaliteit, geboortedatum}: Acte
     return acteurDb.createActeur(acteur)
 }
 
-const getAllActeurs = async (): Promise<Acteur[]> => acteurDb.getAllActeurs();
+const getAllActeurs = async (): Promise<Acteur[]> => {
+    const acteurs = await acteurDb.getAllActeurs();
+    console.log("service:");
+    console.log(acteurs);
+    return acteurs;
+}
 
 const getActeurByFullName = (voornaam: string, achternaam: string): Acteur => {
     const acteur = acteurDb.getActeurByFullName(voornaam, achternaam)

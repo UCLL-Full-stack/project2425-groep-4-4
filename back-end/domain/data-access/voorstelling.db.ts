@@ -23,9 +23,12 @@ const getVoorstellingById = (id: number): Voorstelling => {
 
 const getAllVoorstellingen = async (): Promise<Voorstelling[]> => {
     try {
+        console.log("Running database query...");
         const voorstellingenPrisma = await database.voorstelling.findMany();
-        return voorstellingenPrisma.map((voorstellingPrisma) => Voorstelling.from(voorstellingPrisma))
+        console.log("voorstellingen fetched:", voorstellingenPrisma);
+        return voorstellingenPrisma.map((voorstellingPrisma: any) => Voorstelling.from(voorstellingPrisma))
     } catch (error) {
+        console.error("Database error:", error);
         throw new Error(`Database error. See server log for details.`);
     }
 };

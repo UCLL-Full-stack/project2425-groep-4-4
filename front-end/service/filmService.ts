@@ -22,5 +22,6 @@ const getFilmById = async (id: number) => {
     getAllFilms,
     getFilmById,
   };
+  
   export default filmService;
   

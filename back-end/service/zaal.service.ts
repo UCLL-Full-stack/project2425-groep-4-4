@@ -19,7 +19,15 @@ const getAllZalen = async (): Promise<Zaal[]> => {
     return zalen
 }
 
+const getZaalById = async (id: number): Promise<Zaal> => {
+    const zaal = await zaalDb.getZaalById({ id });
+    if (!zaal) throw new Error(`Zaal with id ${id} does not exist.`);
+    return zaal;
+};
+
+
 export default {
     createZaal,
-    getAllZalen
+    getAllZalen,
+    getZaalById
 }

@@ -113,4 +113,35 @@ zaalRouter.get('/getAll', async (req: Request, res: Response) => {
     }
 })
 
+/**
+ * @swagger
+ * /zaal/{id}:
+ *   get:
+ *     summary: Get a zaal by id.
+ *     tags: [Zalen]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The zaal id.
+ *     responses:
+ *       200:
+ *         description: A Zaal object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ZaalInput'
+ */
+zaalRouter.get('/:id', async (req: Request, res: Response) => { 
+    try {
+        const zaal = await zaalService.getZaalById(Number(req.params.id));
+        res.status(200).json(zaal);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
+
 export { zaalRouter };

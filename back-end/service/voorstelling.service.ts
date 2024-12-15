@@ -29,7 +29,14 @@ const createVoorstelling = ({zaalId, filmId, datum, tijdstip}: VoorstellingInput
 
 const getAllVoorstellingen = async (): Promise<Voorstelling[]> => voorstellingDb.getAllVoorstellingen();
 
+const getVoorstellingById = async (id: number): Promise<Voorstelling> => {
+    const voorstelling = await voorstellingDb.getVoorstellingById({ id });
+    if (!voorstelling) throw new Error(`Voorstelling with id ${id} does not exist.`);
+    return voorstelling;
+};
+
 export default {
     createVoorstelling,
-    getAllVoorstellingen
+    getAllVoorstellingen,
+    getVoorstellingById
 }

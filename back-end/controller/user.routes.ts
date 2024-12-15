@@ -131,4 +131,34 @@ userRouter.get('/getAll', async (req: Request, res: Response) => {
     }
 })
 
+/**
+ * @swagger
+ * /user/{id}:
+ *   get:
+ *     summary: Get an user by id.
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The acteur id.
+ *     responses:
+ *       200:
+ *         description: An User object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserInput'
+ */
+userRouter.get('/:id', async (req: Request, res: Response) => { 
+    try {
+        const user = await userService.getUserById(Number(req.params.id));
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
 export { userRouter };

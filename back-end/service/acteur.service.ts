@@ -31,8 +31,15 @@ const getActeurByFullName = (voornaam: string, achternaam: string): Acteur => {
     return acteur
 }
 
+const getActeurById = async (id: number): Promise<Acteur> => {
+    const acteur = await acteurDb.getActeurById({ id });
+    if (!acteur) throw new Error(`Acteur with id ${id} does not exist.`);
+    return acteur;
+};
+
 export default {
     createActeur,
     getActeurByFullName,
-    getAllActeurs
+    getAllActeurs,
+    getActeurById
 }

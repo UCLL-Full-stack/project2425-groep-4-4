@@ -9,15 +9,6 @@ const createZaal = ({plaatsen}: Zaal): Zaal => {
     return zaal
 }
 
-const getZaalById = (id: number): Zaal => {
-    const zaal = zalen.find(z => z.id === id)
-    if (!zaal) {
-        throw new Error(`zaal met id ${id} niet gevonden`)
-    }
-    return zaal
-}
-
-
 const getAllZalen = async (): Promise<Zaal[]> => {
     try {
         const zalenPrisma = await database.zaal.findMany();
@@ -25,6 +16,19 @@ const getAllZalen = async (): Promise<Zaal[]> => {
         return zalenPrisma.map((zaalPrisma) => Zaal.from(zaalPrisma))
     } catch (error) {
         throw new Error(`Database error. See server log for details.`);
+    }
+};
+
+const getZaalById = async ({ id }: { id: number }): Promise<Zaal | null> => {
+    try {
+        const zaalPrisma = await database.zaal.findUnique({
+            where: { id },
+        });
+
+        return zaalPrisma ? Zaal.from(zaalPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
     }
 };
 

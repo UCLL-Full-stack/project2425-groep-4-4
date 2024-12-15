@@ -62,16 +62,16 @@ const ticketRouter = express.Router();
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-ticketRouter.post('/create', (req: Request, res: Response) => {
-    try {
-        const ticket = <TicketInput>req.body;
-        const result = ticketService.createTicket(ticket);
-        res.status(200).json(result);
-    }
-    catch (error) {
-        res.status(400).json({status: 'error', message: (error as Error).message});
-    }
-})
+// ticketRouter.post('/create', (req: Request, res: Response) => {
+//     try {
+//         const ticket = <TicketInput>req.body;
+//         const result = ticketService.createTicket(ticket);
+//         res.status(200).json(result);
+//     }
+//     catch (error) {
+//         res.status(400).json({status: 'error', message: (error as Error).message});
+//     }
+// })
 
 /**
  * @swagger

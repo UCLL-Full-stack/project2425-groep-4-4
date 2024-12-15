@@ -9,33 +9,33 @@ const createVoorstelling = ({zaalId, filmId, datum, tijdstip}: Voorstelling): Vo
     return voorstelling
 }
 
-// const getVoorstellingByInfo = ({zaalId, filmId, datum, tijdstip}: Voorstelling): Voorstelling | undefined => {
-//     return voorstellingen.find(v => v.zaal === zaal && v.film === film && v.datum === datum && v.tijdstip === tijdstip)
-// }
-
-const getVoorstellingById = (id: number): Voorstelling => {
-    const voorstelling = voorstellingen.find(v => v.id === id)
-    if (!voorstelling) {
-        throw new Error(`voorstelling met id ${id} niet gevonden`)
-    }
-    return voorstelling
-}
-
 const getAllVoorstellingen = async (): Promise<Voorstelling[]> => {
     try {
         console.log("Running database query...");
-        const voorstellingenPrisma = await database.voorstelling.findMany();
-        console.log("voorstellingen fetched:", voorstellingenPrisma);
-        return voorstellingenPrisma.map((voorstellingPrisma: any) => Voorstelling.from(voorstellingPrisma))
+        const voorstellingPrisma = await database.voorstelling.findMany();
+        console.log("voorstellingen fetched:", voorstellingPrisma);
+        return voorstellingPrisma.map((voorstellingPrisma: any) => Voorstelling.from(voorstellingPrisma))
     } catch (error) {
         console.error("Database error:", error);
         throw new Error(`Database error. See server log for details.`);
     }
 };
 
+const getVoorstellingById = async ({ id }: { id: number }): Promise<Voorstelling | null> => {
+    try {
+        const voorstellingPrisma = await database.voorstelling.findUnique({
+            where: { id },
+        });
+
+        return voorstellingPrisma ? Voorstelling.from(voorstellingPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
 export default {
     createVoorstelling,
-    // getVoorstellingByInfo,
     getVoorstellingById,
     getAllVoorstellingen
 }

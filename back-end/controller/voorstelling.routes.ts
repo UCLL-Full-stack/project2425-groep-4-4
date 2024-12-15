@@ -124,4 +124,34 @@ voorstellingRouter.get('/getAll', async (req: Request, res: Response) => {
     }
 })
 
+/**
+ * @swagger
+ * /voorstelling/{id}:
+ *   get:
+ *     summary: Get a voorstelling by id.
+ *     tags: [Voorstellingen]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The voorstelling id.
+ *     responses:
+ *       200:
+ *         description: An voorstelling object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/VoorstellingInput'
+ */
+voorstellingRouter.get('/:id', async (req: Request, res: Response) => { 
+    try {
+        const voorstelling = await voorstellingService.getVoorstellingById(Number(req.params.id));
+        res.status(200).json(voorstelling);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
 export { voorstellingRouter };

@@ -30,7 +30,14 @@ const getAllUsers = async (): Promise<User[]> => {
     }
 };
 
+const getUserById = async (id: number): Promise<User> => {
+    const user = await userDb.getUserById({ id });
+    if (!user) throw new Error(`User with id ${id} does not exist.`);
+    return user;
+};
+
 export default {
     createUser,
-    getAllUsers
+    getAllUsers,
+    getUserById
 }

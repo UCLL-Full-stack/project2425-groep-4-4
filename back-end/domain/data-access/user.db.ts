@@ -25,8 +25,22 @@ const getAllUsers = async (): Promise<User[]> => {
     }
 };
 
+const getUserById = async ({ id }: { id: number }): Promise<User | null> => {
+    try {
+        const userPrisma = await database.user.findUnique({
+            where: { id },
+        });
+
+        return userPrisma ? User.from(userPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
+
 export default {
     createUser,
     getUserByEmail,
-    getAllUsers
+    getAllUsers,
+    getUserById
 }

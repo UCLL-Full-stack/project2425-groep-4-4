@@ -126,4 +126,35 @@ acteurRouter.get('/getAll', async (req: Request, res: Response) => {
     }
 })
 
+/**
+ * @swagger
+ * /acteur/{id}:
+ *   get:
+ *     summary: Get an acteur by id.
+ *     tags: [Acteurs]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The acteur id.
+ *     responses:
+ *       200:
+ *         description: An acteur object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ActeurInput'
+ */
+acteurRouter.get('/:id', async (req: Request, res: Response) => { 
+    try {
+        const acteur = await acteurService.getActeurById(Number(req.params.id));
+        res.status(200).json(acteur);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
+
 export { acteurRouter };

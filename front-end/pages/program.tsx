@@ -2,34 +2,34 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
 import styles from '../styles/home.module.css';
-import { Film } from '@/types/types';
+import { Voorstelling } from '@/types/types';
 import { useEffect, useState } from 'react';
-import filmService from '@/service/filmService';
-import FilmOverview from '@/components/FilmOverview';
+import voorstellingService from '@/service/voorstellingService';
+import ProgramOverview from '@/components/ProgramOverview';
 import useInterval from 'use-interval';
 import { useRouter } from 'next/router';
 
 const program: React.FC = () => {
-  const [films, setFilms] = useState<Array<Film>>();
+  const [voorstellingen, setvoorstellingen] = useState<Array<Voorstelling>>();
   const [error, setError] = useState<String>();
 
-  const getFilms = async () => {
+  const getvoorstellingen = async () => {
     setError("");
 
     const responses = await Promise.all([
-      filmService.getAllFilms()
+      voorstellingService.getAllVoorstellingen()
     ]);
-    const [filmResponse] = responses;
-    const films = await filmResponse.json();
-    setFilms(films);
+    const [voorstellingResponse] = responses;
+    const voorstellingen = await voorstellingResponse.json();
+    setvoorstellingen(voorstellingen);
   };
 
   useEffect(() => {
-    getFilms();
+    getvoorstellingen();
   }, []);
 
   useInterval(() => {
-    getFilms();
+    getvoorstellingen();
   }, 5000)
   
   return (
@@ -46,8 +46,8 @@ const program: React.FC = () => {
           <h1>Program</h1>
         </span>
         <>
-          <FilmOverview
-            films={films}
+          <ProgramOverview
+            voorstellingen={voorstellingen}
           />
         </>
       </main>

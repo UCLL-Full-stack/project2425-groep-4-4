@@ -31,7 +31,7 @@ const ProgramOverview: React.FC<Props> = ({ voorstellingen }: Props) => {
                     </div>
                     <div className="details">
                         <p>Lounge: {voorstelling.zaal.id}</p>
-                        <p>Date: {voorstelling.datum}</p>
+                        <p>Date: {String(voorstelling.datum)}</p>
                     </div>
                 </div>
             ))}

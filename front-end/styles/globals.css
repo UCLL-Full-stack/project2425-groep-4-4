@@ -385,3 +385,27 @@ h3 {
   font-weight: 700;
   color: #46AAFE;
 }
+
+.buy-box {
+  display: flex;
+  align-items: center;
+  background-color: #003975;
+  justify-content: space-between;
+  border-radius: 1rem;
+}
+
+.buy-box button {
+  border-radius: 1rem;
+}
+
+.buy-info {
+  justify-content: space-around;
+  width: 100%;
+}
+
+.buy-info p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}

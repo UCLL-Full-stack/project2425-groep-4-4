@@ -41,8 +41,6 @@ const ProgramOverview: React.FC<Props> = ({ voorstellingen }: Props) => {
                             <p>Time: {voorstelling.tijdstip}</p>
                         </div>
                     </div>
-                    
-                    
                 </div>
             ))}
         </div>

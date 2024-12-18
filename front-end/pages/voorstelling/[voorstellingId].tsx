@@ -41,7 +41,13 @@ const ReadVoorstellingById = () => {
                             <p className="details-item">{voorstelling.film.beschrijving}</p>
                             <p className="details-item">Duration: {voorstelling.film.speeltijd}min</p>
                             <p className="details-item">Actors: {voorstelling.film.acteurs?.join(", ")}</p>
-                            <button className="button-big">Buy Ticket</button>
+                            <div className="flex buy-box">
+                                <div className="flex buy-info">
+                                    <p className="details-item">{new Date(voorstelling.datum).toLocaleDateString()}</p>
+                                    <p className="details-item">{voorstelling.tijdstip}</p>
+                                </div>
+                                <button className="button-big">Buy Ticket</button>
+                            </div>
                         </div>
                     </div>
                     

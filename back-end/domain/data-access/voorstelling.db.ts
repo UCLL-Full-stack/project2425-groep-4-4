@@ -3,11 +3,11 @@ import database from "./database"
 
 const voorstellingen: Voorstelling[] = []
 
-// const createVoorstelling = ({zaalId, filmId, datum, tijdstip}: Voorstelling): Voorstelling => {
-//     const voorstelling = new Voorstelling({zaalId, filmId, datum, tijdstip})
-//     voorstellingen.push(voorstelling)
-//     return voorstelling
-// }
+const createVoorstelling = ({zaal, film, datum, tijdstip}: Voorstelling): Voorstelling => {
+    const voorstelling = new Voorstelling({zaal, film, datum, tijdstip})
+    voorstellingen.push(voorstelling)
+    return voorstelling
+}
 
 const getAllVoorstellingen = async (): Promise<Voorstelling[]> => {
     try {
@@ -25,21 +25,25 @@ const getAllVoorstellingen = async (): Promise<Voorstelling[]> => {
     }
 };
 
-// const getVoorstellingById = async ({ id }: { id: number }): Promise<Voorstelling | null> => {
-//     try {
-//         const voorstellingPrisma = await database.voorstelling.findUnique({
-//             where: { id },
-//         });
+const getVoorstellingById = async ({ id }: { id: number }): Promise<Voorstelling | null> => {
+    try {
+        const voorstellingPrisma = await database.voorstelling.findUnique({
+            where: { id },
+            include: {
+                zaal: true,
+                film: true
+            }
+        });
 
-//         return voorstellingPrisma ? Voorstelling.from(voorstellingPrisma) : null;
-//     } catch (error) {
-//         console.error(error);
-//         throw new Error('Database error. See server log for details.');
-//     }
-// };
+        return voorstellingPrisma ? Voorstelling.from(voorstellingPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
 
 export default {
-    // createVoorstelling,
-    // getVoorstellingById,
+    createVoorstelling,
+    getVoorstellingById,
     getAllVoorstellingen
 }

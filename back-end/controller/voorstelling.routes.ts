@@ -29,6 +29,22 @@
  *           items:
  *             $ref: '#/components/schemas/TicketInput'
  *           description: "Een lijst van tickets die voor deze voorstelling zijn verkocht."
+ *     VoorstellingCreateInput:
+ *      type: object
+ *      properties:
+ *       zaal:
+ *        $ref: '#/components/schemas/ZaalInput'
+ *       film:
+ *        $ref: '#/components/schemas/FilmInput'
+ *       datum:
+ *        type: string
+ *        format: date
+ *        example: "2024-11-01"
+ *       tijdstip:
+ *        type: string
+ *        example: "19:30"
+ * 
+ * 
  */
 import express, {Request, Response} from 'express';
 import { VoorstellingInput } from '../types';
@@ -47,7 +63,7 @@ const voorstellingRouter = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/VoorstellingInput'
+ *             $ref: '#/components/schemas/VoorstellingCreateInput'
  *     responses:
  *       200:
  *         description: Voorstelling succesvol aangemaakt
@@ -75,16 +91,16 @@ const voorstellingRouter = express.Router();
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-// voorstellingRouter.post('/create', (req: Request, res: Response) => {
-//     try {
-//         const voorstelling = <VoorstellingInput>req.body;
-//         const result = voorstellingService.createVoorstelling(voorstelling);
-//         res.status(200).json(result);
-//     }
-//     catch (error) {
-//         res.status(400).json({status: 'error', message: (error as Error).message});
-//     }
-// })
+voorstellingRouter.post('/create', (req: Request, res: Response) => {
+    try {
+        const voorstelling = <VoorstellingInput>req.body;
+        const result = voorstellingService.createVoorstelling(voorstelling);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+})
 
 /**
  * @swagger
@@ -145,13 +161,13 @@ voorstellingRouter.get('/getAll', async (req: Request, res: Response) => {
  *             schema:
  *               $ref: '#/components/schemas/VoorstellingInput'
  */
-// voorstellingRouter.get('/:id', async (req: Request, res: Response) => { 
-//     try {
-//         const voorstelling = await voorstellingService.getVoorstellingById(Number(req.params.id));
-//         res.status(200).json(voorstelling);
-//     } catch (error) {
-//         res.status(400).json({status: 'error', message: (error as Error).message});
-//     }
-// });
+voorstellingRouter.get('/:id', async (req: Request, res: Response) => { 
+    try {
+        const voorstelling = await voorstellingService.getVoorstellingById(Number(req.params.id));
+        res.status(200).json(voorstelling);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
 
 export { voorstellingRouter };

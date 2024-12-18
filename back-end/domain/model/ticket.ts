@@ -1,6 +1,6 @@
 import { User } from "./user";
 import { Voorstelling } from "./voorstelling";
-import { Ticket as TicketPrisma, User as UserPrisma, Voorstelling as VoorstellingPrisma } from '@prisma/client';
+import { Film as FilmPrisma, Ticket as TicketPrisma, User as UserPrisma, Voorstelling as VoorstellingPrisma, Zaal as ZaalPrisma } from '@prisma/client';
 
 export class Ticket {
     readonly id?: number
@@ -39,7 +39,7 @@ export class Ticket {
     }: TicketPrisma & { voorstelling: VoorstellingPrisma; user: UserPrisma | null}) {
         return new Ticket({
             id,
-            voorstelling: Voorstelling.from(voorstelling),  
+            voorstelling: Voorstelling.from(voorstelling as VoorstellingPrisma & { zaal: ZaalPrisma, film: FilmPrisma }),  
             user: user ? User.from(user) : undefined
         });
     }

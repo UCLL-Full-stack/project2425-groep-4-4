@@ -1,19 +1,67 @@
 import { PrismaClient } from '@prisma/client';
+import { connect } from 'http2';
 
 const prisma = new PrismaClient();
 
 async function main() {
+
+  // Delete existing data
+  await prisma.ticket.deleteMany()
+  await prisma.voorstelling.deleteMany();
+  await prisma.zaal.deleteMany();
+  await prisma.film.deleteMany();
+  await prisma.acteur.deleteMany();
+  await prisma.user.deleteMany();
   // Create films
-  const films = await prisma.film.createMany({
-    data: [
-      { titel: "Avatar: The Way of Water", speeltijd: 192, beschrijving: "Jake Sully and Neytiri are back on Pandora for a new adventure." },
-      { titel: "The Dark Knight", speeltijd: 152, beschrijving: "Batman faces his most dangerous adversary yet, the Joker." },
-      { titel: "Inception", speeltijd: 148, beschrijving: "A thief who enters the dreams of others to steal secrets is given a chance to have his criminal record erased." },
-      { titel: "Interstellar", speeltijd: 169, beschrijving: "A group of explorers ventures beyond our solar system to ensure humanity's survival." },
-      { titel: "Pulp Fiction", speeltijd: 154, beschrijving: "A series of interconnected stories, each involving crime in Los Angeles." },
-      { titel: "Forrest Gump", speeltijd: 142, beschrijving: "The life story of a slow-witted but kind-hearted man from Alabama." }
-    ]
+
+  const avatar = await prisma.film.create({
+    data: {
+      titel: "Avatar: The Way of Water",
+      speeltijd: 192,
+      beschrijving: "Jake Sully and Neytiri are back on Pandora for a new adventure.",
+    },
   });
+  
+  const darkKnight = await prisma.film.create({
+    data: {
+      titel: "The Dark Knight",
+      speeltijd: 152,
+      beschrijving: "Batman faces his most dangerous adversary yet, the Joker.",
+    },
+  });
+  
+  const inception = await prisma.film.create({
+    data: {
+      titel: "Inception",
+      speeltijd: 148,
+      beschrijving: "A thief who enters the dreams of others to steal secrets is given a chance to have his criminal record erased.",
+    },
+  });
+  
+  const interstellar = await prisma.film.create({
+    data: {
+      titel: "Interstellar",
+      speeltijd: 169,
+      beschrijving: "A group of explorers ventures beyond our solar system to ensure humanity's survival.",
+    },
+  });
+  
+  const pulpFiction = await prisma.film.create({
+    data: {
+      titel: "Pulp Fiction",
+      speeltijd: 154,
+      beschrijving: "A series of interconnected stories, each involving crime in Los Angeles.",
+    },
+  });
+  
+  const forrestGump = await prisma.film.create({
+    data: {
+      titel: "Forrest Gump",
+      speeltijd: 142,
+      beschrijving: "The life story of a slow-witted but kind-hearted man from Alabama.",
+    },
+  });
+  
 
   // Create actors
   const actors = await prisma.acteur.createMany({
@@ -41,46 +89,233 @@ async function main() {
   });
 
   // Create zalen (theaters)
-  const zalen = await prisma.zaal.createMany({
-    data: [
-      { plaatsen: 100 },
-      { plaatsen: 120 },
-      { plaatsen: 150 },
-      { plaatsen: 80 },
-      { plaatsen: 90 },
-      { plaatsen: 110 },
-      { plaatsen: 200 },
-      { plaatsen: 250 },
-      { plaatsen: 75 },
-      { plaatsen: 60 },
-      { plaatsen: 130 },
-      { plaatsen: 140 }
-    ]
+  const zaal1 = await prisma.zaal.create({
+    data: {
+      plaatsen: 100,
+    },
   });
+  
+  const zaal2 = await prisma.zaal.create({
+    data: {
+      plaatsen: 120,
+    },
+  });
+  
+  const zaal3 = await prisma.zaal.create({
+    data: {
+      plaatsen: 150,
+    },
+  });
+  
+  const zaal4 = await prisma.zaal.create({
+    data: {
+      plaatsen: 80,
+    },
+  });
+  
+  const zaal5 = await prisma.zaal.create({
+    data: {
+      plaatsen: 90,
+    },
+  });
+  
+  const zaal6 = await prisma.zaal.create({
+    data: {
+      plaatsen: 110,
+    },
+  });
+  
+  const zaal7 = await prisma.zaal.create({
+    data: {
+      plaatsen: 200,
+    },
+  });
+  
+  const zaal8 = await prisma.zaal.create({
+    data: {
+      plaatsen: 250,
+    },
+  });
+  
+  const zaal9 = await prisma.zaal.create({
+    data: {
+      plaatsen: 75,
+    },
+  });
+  
+  const zaal10 = await prisma.zaal.create({
+    data: {
+      plaatsen: 60,
+    },
+  });
+  
+  const zaal11 = await prisma.zaal.create({
+    data: {
+      plaatsen: 130,
+    },
+  });
+  
+  const zaal12 = await prisma.zaal.create({
+    data: {
+      plaatsen: 140,
+    },
+  });
+  
 
   // Create voorstellingen (showings)
-  const voorstellingen = await prisma.voorstelling.createMany({
-    data: [
-      { datum: new Date("2024-12-01T15:00:00"), tijdstip: "15:00", zaalId: 1, filmId: 1 },
-      { datum: new Date("2024-12-01T18:00:00"), tijdstip: "18:00", zaalId: 2, filmId: 2 },
-      { datum: new Date("2024-12-02T12:00:00"), tijdstip: "12:00", zaalId: 3, filmId: 3 },
-      { datum: new Date("2024-12-02T20:00:00"), tijdstip: "20:00", zaalId: 4, filmId: 4 },
-      { datum: new Date("2024-12-03T10:00:00"), tijdstip: "10:00", zaalId: 5, filmId: 5 },
-      { datum: new Date("2024-12-03T13:00:00"), tijdstip: "13:00", zaalId: 6, filmId: 6 },
-      { datum: new Date("2024-12-04T14:00:00"), tijdstip: "14:00", zaalId: 7, filmId: 1 },
-      { datum: new Date("2024-12-04T17:00:00"), tijdstip: "17:00", zaalId: 8, filmId: 2 },
-      { datum: new Date("2024-12-05T11:00:00"), tijdstip: "11:00", zaalId: 9, filmId: 3 },
-      { datum: new Date("2024-12-05T16:00:00"), tijdstip: "16:00", zaalId: 10, filmId: 4 },
-      { datum: new Date("2024-12-06T19:00:00"), tijdstip: "19:00", zaalId: 11, filmId: 5 },
-      { datum: new Date("2024-12-06T21:00:00"), tijdstip: "21:00", zaalId: 12, filmId: 6 },
-      { datum: new Date("2024-12-07T10:00:00"), tijdstip: "10:00", zaalId: 1, filmId: 2 },
-      { datum: new Date("2024-12-07T13:00:00"), tijdstip: "13:00", zaalId: 2, filmId: 3 },
-      { datum: new Date("2024-12-08T17:00:00"), tijdstip: "17:00", zaalId: 3, filmId: 4 },
-      { datum: new Date("2024-12-08T20:00:00"), tijdstip: "20:00", zaalId: 4, filmId: 5 },
-      { datum: new Date("2024-12-09T15:00:00"), tijdstip: "15:00", zaalId: 5, filmId: 6 },
-      { datum: new Date("2024-12-09T18:00:00"), tijdstip: "18:00", zaalId: 6, filmId: 1 }
-    ]
+  const voorstelling1 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-01T18:00:00"),
+      tijdstip: "18:00",
+      zaal: {connect: {id: zaal1.id}},
+      film: {connect: {id: avatar.id}},
+    },
   });
+  
+  const voorstelling2 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-02T12:00:00"),
+      tijdstip: "12:00",
+      zaal: {connect: {id: zaal3.id}},
+      film: {connect: {id: inception.id}},
+    },
+  });
+  
+  const voorstelling3 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-02T20:00:00"),
+      tijdstip: "20:00",
+      zaal: {connect: {id: zaal4.id}},
+      film: {connect: {id: interstellar.id}},
+    },
+  });
+  
+  const voorstelling4 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-03T10:00:00"),
+      tijdstip: "10:00",
+      zaal: {connect: {id: zaal5.id}},
+      film: {connect: {id: pulpFiction.id}},
+    },
+  });
+  
+  const voorstelling5 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-03T13:00:00"),
+      tijdstip: "13:00",
+      zaal: {connect: {id: zaal6.id}},
+      film: {connect: {id: forrestGump.id}},
+    },
+  });
+  
+  const voorstelling6 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-04T14:00:00"),
+      tijdstip: "14:00",
+      zaal: {connect: {id: zaal7.id}},
+      film: {connect: {id: avatar.id}},
+    },
+  });
+  
+  const voorstelling7 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-04T17:00:00"),
+      tijdstip: "17:00",
+      zaal: {connect: {id: zaal8.id}},
+      film: {connect: {id: darkKnight.id}},
+    },
+  });
+  
+  const voorstelling8 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-05T11:00:00"),
+      tijdstip: "11:00",
+      zaal: {connect: {id: zaal9.id}},
+      film: {connect: {id: inception.id}},
+    },
+  });
+  
+  const voorstelling9 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-05T16:00:00"),
+      tijdstip: "16:00",
+      zaal: {connect: {id: zaal10.id}},
+      film: {connect: {id: interstellar.id}},
+    },
+  });
+  
+  const voorstelling10 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-06T19:00:00"),
+      tijdstip: "19:00",
+      zaal: {connect: {id: zaal11.id}},
+      film: {connect: {id: pulpFiction.id}},
+    },
+  });
+  
+  const voorstelling11 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-06T21:00:00"),
+      tijdstip: "21:00",
+      zaal: {connect: {id: zaal12.id}},
+      film: {connect: {id: forrestGump.id}},
+    },
+  });
+  
+  const voorstelling12 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-07T10:00:00"),
+      tijdstip: "10:00",
+      zaal: {connect: {id: zaal1.id}},
+      film: {connect: {id: darkKnight.id}},
+    },
+  });
+  
+  const voorstelling13 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-07T13:00:00"),
+      tijdstip: "13:00",
+      zaal: {connect: {id: zaal2.id}},
+      film: {connect: {id: inception.id}},
+    },
+  });
+  
+  const voorstelling14 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-08T17:00:00"),
+      tijdstip: "17:00",
+      zaal: {connect: {id: zaal3.id}},
+      film: {connect: {id: interstellar.id}},
+    },
+  });
+  
+  const voorstelling15 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-08T20:00:00"),
+      tijdstip: "20:00",
+      zaal: {connect: {id: zaal4.id}},
+      film: {connect: {id: pulpFiction.id}},
+    },
+  });
+  
+  const voorstelling16 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-09T15:00:00"),
+      tijdstip: "15:00",
+      zaal: {connect: {id: zaal5.id}},
+      film: {connect: {id: forrestGump.id}},
+    },
+  });
+  
+  const voorstelling17 = await prisma.voorstelling.create({
+    data: {
+      datum: new Date("2024-12-09T18:00:00"),
+      tijdstip: "18:00",
+      zaal: {connect: {id: zaal6.id}},
+      film: {connect: {id: avatar.id}},
+    },
+  });
+  
 
   console.log("Seeding complete!");
 }

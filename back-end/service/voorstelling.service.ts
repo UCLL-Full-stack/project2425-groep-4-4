@@ -4,39 +4,45 @@ import zaalDb from "../domain/data-access/zaal.db";
 import { Voorstelling } from "../domain/model/voorstelling";
 import { VoorstellingInput } from "../types";
 
-// const createVoorstelling = ({zaalId, filmId, datum, tijdstip}: VoorstellingInput): Voorstelling => {
+const createVoorstelling = async ({zaal, film, datum, tijdstip}: VoorstellingInput): Promise<Voorstelling> => {
 
-//     if (!zaalId || !filmId || !datum || !tijdstip) {
-//         throw new Error('VoorstellingInput is niet correct')
-//     }
+    if (!zaal || !film || !datum || !tijdstip) {
+        throw new Error('VoorstellingInput is niet correct')
+    }
 
-//     if (zaalId === undefined) {
-//         throw new Error('Zaal ID is undefined');
-//     }
+    if (zaal.id === undefined) {
+        throw new Error('Zaal id is undefined');
+    }
 
-//     if (filmId === undefined) {
-//         throw new Error('Film ID is undefined');
-//     }
+    const zaalObj = await zaalDb.getZaalById({ id: zaal.id });
+    if (!zaalObj) {
+        throw new Error('no Zaal was found');
+    }
 
-//     if (voorstellingDb.getVoorstellingByInfo({zaal, film, datum, tijdstip})) {
-//         throw new Error(`Voorstelling met zaal ${zaal.id}, film ${film.id}, datum ${datum} en tijdstip ${tijdstip} bestaat al`)
-//     }
+    if (film.id === undefined) {
+        throw new Error('Film id is undefined');
+    }
 
-//     const voorstelling = new Voorstelling({zaalId, filmId, datum, tijdstip})
+    const filmObj = await filmDb.getFilmById({id: film.id});
+    if (!filmObj) {
+        throw new Error('no film was found');
+    }
+
+    const voorstelling = new Voorstelling({film: filmObj, zaal: zaalObj, datum, tijdstip});
     
-//     return voorstellingDb.createVoorstelling(voorstelling)
-// }
+    return voorstellingDb.createVoorstelling(voorstelling);
+}
 
 const getAllVoorstellingen = async (): Promise<Voorstelling[]> => voorstellingDb.getAllVoorstellingen();
 
-// const getVoorstellingById = async (id: number): Promise<Voorstelling> => {
-//     const voorstelling = await voorstellingDb.getVoorstellingById({ id });
-//     if (!voorstelling) throw new Error(`Voorstelling with id ${id} does not exist.`);
-//     return voorstelling;
-// };
+const getVoorstellingById = async (id: number): Promise<Voorstelling> => {
+    const voorstelling = await voorstellingDb.getVoorstellingById({ id });
+    if (!voorstelling) throw new Error(`Voorstelling with id ${id} does not exist.`);
+    return voorstelling;
+}; 
 
 export default {
-    // createVoorstelling,
+    createVoorstelling,
     getAllVoorstellingen,
-    // getVoorstellingById
+    getVoorstellingById
 }

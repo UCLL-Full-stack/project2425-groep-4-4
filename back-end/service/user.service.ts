@@ -1,9 +1,9 @@
 import userDb from "../domain/data-access/user.db"
 import { User } from "../domain/model/user"
 import { UserInput } from "../types"
+import bcrypt from "bcrypt"
 
-const createUser = ({admin, voornaam, achternaam, email, password}: UserInput): User => {
-
+const createUser = async ({admin, voornaam, achternaam, email, password}: UserInput): Promise<User> => {  
     if (!admin || !voornaam || !achternaam || !email || !password) {
         throw new Error("Voornaam, achternaam, email en password zijn verplicht")
     }
@@ -11,10 +11,10 @@ const createUser = ({admin, voornaam, achternaam, email, password}: UserInput): 
     if (userDb.getUserByEmail(email)) {
         throw new Error(`User met email ${email} bestaat al`)
     }
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = new User({admin, voornaam, achternaam, email, password: hashedPassword});
 
-    const user = new User({admin, voornaam, achternaam, email, password})
-    
-    return userDb.createUser(user)
+    return userDb.createUser(user);
 }
 
 const getAllUsers = async (): Promise<User[]> => {

@@ -424,3 +424,23 @@ h3 {
   color: white;
   cursor: pointer;
 }
+
+.admin-item-container {
+  justify-content: space-between;
+  width: min-content;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 1.5rem;
+  background-color: rgb(28, 28, 28);
+}
+
+.item-info {
+  width: 50%;
+  min-width: 20rem;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}

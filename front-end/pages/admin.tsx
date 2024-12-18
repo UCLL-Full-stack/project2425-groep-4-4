@@ -65,22 +65,40 @@ const AllMovies: React.FC = () => {
   // Handle click on "Movies" header
   const setMoviesList = () => {
     const movieList = (
-      <ul>
+      <div>
         {films.map((film) => (
-          <li key={film.id}>{film.titel}</li>
+          <div className='flex admin-item-container'>
+            <div key={film.id} className='item-info'>
+              <p>{film.titel}</p>
+              <p>{film.beschrijving}</p>
+              <p>{film.speeltijd}</p>
+            </div>
+            <div className='button-container'>
+              <button className='button'>Edit</button>
+            </div>
+          </div>          
         ))}
-      </ul>
+      </div>
     );
     setContent(movieList);
   };
 
   const setActorsList = () => {
     const actorList = (
-      <ul>
+      <div>
         {actors.map((actor) => (
-          <li key={actor.id}>{actor.voornaam}</li>
+          <div className='flex admin-item-container'>
+            <div key={actor.id} className='item-info'>
+              <p>{actor.voornaam} {actor.achternaam}</p>
+              <p>{new Date(actor.geboortedatum).toLocaleDateString()}</p>
+              <p>{actor.nationaliteit}</p>
+            </div>
+            <div className='button-container'>
+              <button className='button'>Edit</button>
+            </div>
+          </div>          
         ))}
-      </ul>
+      </div>
     );
     setContent(actorList);
   }

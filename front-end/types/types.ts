@@ -46,3 +46,47 @@ export type User = {
     password: string
     tickets: Ticket[]
 }
+
+export type ActeurInput = {
+    id?: number;
+    voornaam?: string;
+    achternaam?: string;
+    nationaliteit?: string;
+    geboortedatum?: Date;
+}
+
+export type FilmInput = {
+    id?: number
+    titel?: string
+    speeltijd?: number
+    beschrijving?: string
+    acteurs?: ActeurInput[]
+}
+
+export type ZaalInput = {
+    id?: number
+    plaatsen?: number
+}
+
+export type VoorstellingInput = {
+    id?: number
+    zaal?: ZaalInput
+    film?: FilmInput
+    datum?: Date
+    tijdstip?: string
+}
+
+export type UserInput = {
+    id?: number
+    admin?: boolean
+    voornaam?: string
+    achternaam?: string
+    email?: string
+    password?: string
+}
+
+export type TicketInput = {
+    id?: number
+    voorstelling?: VoorstellingInput
+    user?: UserInput
+}

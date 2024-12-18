@@ -349,3 +349,33 @@ h3 {
 .details-item {
   margin-bottom: 1rem;
 }
+
+.program-container {
+  gap: 1rem;
+  width: min-content;
+}
+
+.box {
+  display: flex;
+  padding: 1rem;
+  width: max-content;
+  border-radius: 1.5rem;
+  background-color: rgb(28, 28, 28);
+}
+
+.movie-icon {
+  width: 102px;
+  height: 144px;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.info {
+  gap: 3rem;
+}
+
+.program-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #46AAFE;
+}

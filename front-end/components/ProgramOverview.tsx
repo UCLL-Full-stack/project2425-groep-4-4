@@ -20,19 +20,29 @@ const ProgramOverview: React.FC<Props> = ({ voorstellingen }: Props) => {
     }
     
     return (
-        <div className="flex wrap center-content container">
+        <div className="flex wrap center-content program-container">
             {voorstellingen.map((voorstelling, index) => (
                 <div
                     className="box"
                     onClick={() => goToVoorstellingPage(voorstelling.id)}
                 >
-                    <div className="icon">
-                        <img src={`./images/cover-${voorstelling.film.id}.jpg`} alt="movie cover" />
+                    <div>
+                        <img 
+                            src={`./images/cover-${voorstelling.film.id}.jpg`}
+                            alt="movie cover"
+                            className="movie-icon"
+                        />
                     </div>
-                    <div className="details">
-                        <p>Lounge: {voorstelling.zaal.id}</p>
-                        <p>Date: {String(voorstelling.datum)}</p>
+                    <div>
+                        <p className="program-title">{voorstelling.film.titel}</p>
+                        <div className="flex info">
+                            <p>Lounge: {voorstelling.zaal.id}</p>
+                            <p>Date: {new Date(voorstelling.datum).toLocaleDateString()}</p>
+                            <p>Time: {voorstelling.tijdstip}</p>
+                        </div>
                     </div>
+                    
+                    
                 </div>
             ))}
         </div>

@@ -3,10 +3,22 @@ import database from "./database"
 
 const users: User[] = []
 
-const createUser = ({admin, voornaam, achternaam, email, password}: User): User => {
-    const user = new User({admin, voornaam, achternaam, email, password})
-    users.push(user)
-    return user
+const createUser = async ({admin, voornaam, achternaam, email, password}: User): Promise<User> => {
+    try {
+        const userPrisma = await database.user.create({
+            data: {
+                admin,
+                voornaam,
+                achternaam,
+                email,
+                password
+            }
+        })
+        return User.from(userPrisma)
+    } catch (error) {
+        console.error("Database error:", error);
+        throw new Error(`Database error. See server log for details.`);
+    }   
 }
 
 const getUserByEmail = (email: string): User | undefined => {

@@ -73,7 +73,7 @@ export class Film {
             titel,
             speeltijd,
             beschrijving,
-            acteurs: acteurs.map((acteur) => Acteur.from(acteur)),
+            acteurs: (acteurs || []).map((acteur) => Acteur.from(acteur)),
         });
     }
 }

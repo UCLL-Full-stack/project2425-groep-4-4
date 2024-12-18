@@ -75,16 +75,16 @@ const voorstellingRouter = express.Router();
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-voorstellingRouter.post('/create', (req: Request, res: Response) => {
-    try {
-        const voorstelling = <VoorstellingInput>req.body;
-        const result = voorstellingService.createVoorstelling(voorstelling);
-        res.status(200).json(result);
-    }
-    catch (error) {
-        res.status(400).json({status: 'error', message: (error as Error).message});
-    }
-})
+// voorstellingRouter.post('/create', (req: Request, res: Response) => {
+//     try {
+//         const voorstelling = <VoorstellingInput>req.body;
+//         const result = voorstellingService.createVoorstelling(voorstelling);
+//         res.status(200).json(result);
+//     }
+//     catch (error) {
+//         res.status(400).json({status: 'error', message: (error as Error).message});
+//     }
+// })
 
 /**
  * @swagger
@@ -145,13 +145,13 @@ voorstellingRouter.get('/getAll', async (req: Request, res: Response) => {
  *             schema:
  *               $ref: '#/components/schemas/VoorstellingInput'
  */
-voorstellingRouter.get('/:id', async (req: Request, res: Response) => { 
-    try {
-        const voorstelling = await voorstellingService.getVoorstellingById(Number(req.params.id));
-        res.status(200).json(voorstelling);
-    } catch (error) {
-        res.status(400).json({status: 'error', message: (error as Error).message});
-    }
-});
+// voorstellingRouter.get('/:id', async (req: Request, res: Response) => { 
+//     try {
+//         const voorstelling = await voorstellingService.getVoorstellingById(Number(req.params.id));
+//         res.status(200).json(voorstelling);
+//     } catch (error) {
+//         res.status(400).json({status: 'error', message: (error as Error).message});
+//     }
+// });
 
 export { voorstellingRouter };

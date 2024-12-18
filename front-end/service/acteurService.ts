@@ -1,4 +1,4 @@
-import { Acteur, Film } from '@/types/types';
+import { Acteur, ActeurInput, Film } from '@/types/types';
 
 const getAllActeurs = async () => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/acteur/getAll', {
@@ -20,7 +20,7 @@ const getActeurById = async (id: number) => {
   return response;
 };
 
-const createActeur = async (acteur: Acteur) => {
+const createActeur = async (acteur: ActeurInput) => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/acteur/create', {
     method: 'POST',
     headers: {

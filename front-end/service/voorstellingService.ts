@@ -1,4 +1,4 @@
-import { Voorstelling } from "@/types/types";
+import { Voorstelling, VoorstellingInput } from "@/types/types";
 
 const getAllVoorstellingen = async () => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/voorstelling/getAll', {
@@ -20,7 +20,7 @@ const getVoorstellingById = async (id: number) => {
   return response;
 };
 
-const createVoorstelling = async (voorstelling: Voorstelling) => {
+const createVoorstelling = async (voorstelling: VoorstellingInput) => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/voorstelling/create', {
     method: 'POST',
     headers: {

@@ -1,4 +1,4 @@
-import { Film } from '@/types/types';
+import { Film, FilmInput } from '@/types/types';
 
 const getAllFilms = async () => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/film/getAll', {
@@ -20,7 +20,7 @@ const getFilmById = async (id: number) => {
   return response;
 };
 
-const createFilm = async (film: Film) => {
+const createFilm = async (film: FilmInput) => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/film/create', {
     method: 'POST',
     headers: {

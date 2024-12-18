@@ -1,13 +1,19 @@
 import Head from 'next/head';
 import Header from '../components/Header';
 import styles from '../styles/home.module.css';
-import { Film } from '@/types/types';
+import { Acteur, Film, User, Voorstelling } from '@/types/types';
 import { useEffect, useState } from 'react';
 import filmService from '@/service/filmService';
 import useInterval from 'use-interval';
+import acteurService from '@/service/acteurService';
+import userService from '@/service/userService';
+import voorstellingService from '@/service/voorstellingService';
 
 const AllMovies: React.FC = () => {
   const [films, setFilms] = useState<Array<Film>>([]);
+  const [actors, setActors] = useState<Array<Acteur>>([]);
+  const [users, setUsers] = useState<Array<User>>([]);
+  const [program, setPrograms] = useState<Array<Voorstelling>>([]);
   const [error, setError] = useState<string | null>(null);
   const [content, setContent] = useState<JSX.Element | null>(null);
 
@@ -23,8 +29,41 @@ const AllMovies: React.FC = () => {
     }
   };
 
+  const getActors = async () => {
+    try {
+      setError(null);
+      const response = await acteurService.getAllActeurs();
+      const data = await response.json();
+      setActors(data);
+    } catch (err) {
+      setError('Failed to fetch actors');
+    }
+  }
+
+  const getUsers = async () => {
+    try {
+      setError(null);
+      const response = await userService.getAllUsers();
+      const data = await response.json();
+      setUsers(data);
+    } catch (err) {
+      setError('Failed to fetch users');
+    }
+  }
+
+  const getPrograms = async () => {
+    try {
+      setError(null);
+      const response = await voorstellingService.getAllVoorstellingen();
+      const data = await response.json();
+      setPrograms(data);
+    } catch (err) {
+      setError('Failed to fetch programs');
+    }
+  }
+
   // Handle click on "Movies" header
-  const setMovies = () => {
+  const setMoviesList = () => {
     const movieList = (
       <ul>
         {films.map((film) => (
@@ -35,14 +74,53 @@ const AllMovies: React.FC = () => {
     setContent(movieList);
   };
 
+  const setActorsList = () => {
+    const actorList = (
+      <ul>
+        {actors.map((actor) => (
+          <li key={actor.id}>{actor.voornaam}</li>
+        ))}
+      </ul>
+    );
+    setContent(actorList);
+  }
+
+  const setUsersList = () => {
+    const userList = (
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.voornaam}</li>
+        ))}
+      </ul>
+    );
+    setContent(userList);
+  }
+
+  const setProgramsList = () => {
+    const programList = (
+      <ul>
+        {program.map((program) => (
+          <li key={program.id}>{program.film.titel}</li>
+        ))}
+      </ul>
+    );
+    setContent(programList);
+  }
+
   // Fetch films on initial render
   useEffect(() => {
-    getFilms();
+    getFilms(),
+    getActors(),
+    getUsers(),
+    getPrograms()
   }, []);
 
   // Polling for updates every 5 seconds
   useInterval(() => {
-    getFilms();
+    getFilms(),
+    getActors(),
+    getUsers(),
+    getPrograms()
   }, 5000);
 
   return (
@@ -56,11 +134,10 @@ const AllMovies: React.FC = () => {
       <Header />
       <main className={styles.main}>
         <div className="flex admin-header">
-          <h2 onClick={setMovies}>Movies</h2>
-          <h2 onClick={setMovies}>Actors</h2>
-          <h2 onClick={setMovies}>Films</h2>
-          <h2 onClick={setMovies}>Users</h2>
-          <h2 onClick={setMovies}>Programs</h2>
+          <h2 onClick={setMoviesList}>Movies</h2>
+          <h2 onClick={setActorsList}>Actors</h2>
+          <h2 onClick={setUsersList}>Users</h2>
+          <h2 onClick={setProgramsList}>Programs</h2>
         </div>
         <div id="admin-content">{content}</div>
         {error && <p className="error">{error}</p>}

@@ -9,29 +9,7 @@ import FilmOverview from '@/components/FilmOverview';
 import useInterval from 'use-interval';
 import { useRouter } from 'next/router';
 
-const Home: React.FC = () => {
-  const [films, setFilms] = useState<Array<Film>>();
-  const [error, setError] = useState<String>();
-
-  const getFilms = async () => {
-    setError("");
-
-    const responses = await Promise.all([
-      filmService.getAllFilms()
-    ]);
-    const [filmResponse] = responses;
-    const films = await filmResponse.json();
-    setFilms(films);
-  };
-
-  useEffect(() => {
-    getFilms();
-  }, []);
-
-  useInterval(() => {
-    getFilms();
-  }, 5000)
-  
+const Home: React.FC = () => {  
   return (
     <>
       <Head>

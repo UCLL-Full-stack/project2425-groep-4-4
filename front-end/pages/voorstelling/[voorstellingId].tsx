@@ -39,7 +39,7 @@ const ReadVoorstellingById = () => {
                         <div className="details-content">
                             <h1>{voorstelling.film.titel}</h1>
                             <p className="details-item">{voorstelling.film.beschrijving}</p>
-                            <p className="details-item">Duration: {voorstelling.film.speeltijd}min</p>
+                            <p className="details-item">Duration: {voorstelling.film.speeltijd} min</p>
                             <p className="details-item">Actors: {voorstelling.film.acteurs?.join(", ")}</p>
                             <div className="flex buy-box">
                                 <div className="flex buy-info">

@@ -11,7 +11,7 @@ const Header = () => {
         <ul className='flex wrap'>
           <li><a href="/allMovies">All Movies</a></li>
           <li><a href="/program">Program</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/admin">Admin</a></li>
         </ul>
       </nav>
       <div className='header-section end'>

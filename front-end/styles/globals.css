@@ -409,3 +409,18 @@ h3 {
   color: white;
   margin: 0;
 }
+
+.admin-header {
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #131313;
+  border-bottom: #46AAFE solid 1px;
+  width: max-content;
+  gap: 5rem;
+}
+
+.admin-header h2:hover {
+  color: white;
+  cursor: pointer;
+}

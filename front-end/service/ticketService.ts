@@ -11,7 +11,7 @@ const getAllTickets = async () => {
 };
 
 const createTicket = async (ticket: TicketInput) => {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/acteur/create', {
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/ticket/create', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',

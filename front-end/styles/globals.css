@@ -363,6 +363,12 @@ h3 {
   background-color: rgb(28, 28, 28);
 }
 
+.box:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
 .movie-icon {
   width: 102px;
   height: 144px;

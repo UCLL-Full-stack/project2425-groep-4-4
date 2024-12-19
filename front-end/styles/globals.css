@@ -485,7 +485,7 @@ form input {
   flex-direction: column;
   margin-bottom: 1rem;
   height: 10rem;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .text-red-800 {

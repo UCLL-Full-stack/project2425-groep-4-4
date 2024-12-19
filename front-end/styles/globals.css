@@ -487,3 +487,7 @@ form input {
   height: 10rem;
   justify-content: space-between;
 }
+
+.text-red-800 {
+  color: #ff0000;
+}

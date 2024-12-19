@@ -77,7 +77,6 @@ export type VoorstellingInput = {
 }
 
 export type UserInput = {
-    id?: number
     admin?: boolean
     voornaam?: string
     achternaam?: string
@@ -99,4 +98,11 @@ export type StatusMessage = {
 export type UserLogin = {
     email: string;
     password: string;
+}
+
+export type UserStorage = {
+    token: string;
+    email: string;
+    fullname: string;
+    role: string;
 }

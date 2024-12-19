@@ -1,7 +1,25 @@
-import React from 'react';
+import { UserStorage } from '@/types';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useInterval from 'use-interval';
 
 const Header = () => {
+  const [loggedInUser, setLoggedInUser] = useState<UserStorage | null>(null);
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('loggedInUser');
+    setLoggedInUser(user ? JSON.parse(user) : null);
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('loggedInUser');
+    setLoggedInUser(null)
+    window.location.href = '/login';
+  }
+
+  const handleLogin = () => {
+    window.location.href = '/login';
+  }
   
   return (
     <header className="header flex wrap">
@@ -13,11 +31,14 @@ const Header = () => {
         <ul className='flex wrap'>
           <li><a href="/allMovies">All Movies</a></li>
           <li><a href="/program">Program</a></li>
-          <li><a href="/admin">Admin</a></li>
+          {loggedInUser && loggedInUser.role === 'admin' &&
+            <li><a href="/admin">Admin</a></li>
+          }
         </ul>
       </nav>
       <div className='header-section end'>
-        <button className='button' onClick={() => {window.location.href = '/login'}}>Login</button>
+        {!loggedInUser && <button className='button' onClick={handleLogin}>Login</button>}
+        {loggedInUser && <button className='button' onClick={handleLogout}>Logout</button>}
       </div>
       
     </header>

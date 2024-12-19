@@ -70,7 +70,7 @@ const UserLoginForm: React.FC = () => {
     }
 
   return (
-    <div className="center">
+    <div className="center login-box">
       <h2 className="center-text">Login</h2>
       {statusMessages && (
         <div className="row">
@@ -126,7 +126,7 @@ const UserLoginForm: React.FC = () => {
           </div>
         </div>
         <button
-          className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          className="button"
           type="submit"
         >
           Login

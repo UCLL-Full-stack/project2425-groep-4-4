@@ -13,7 +13,7 @@ const AllMovies: React.FC = () => {
   const [films, setFilms] = useState<Array<Film>>([]);
   const [actors, setActors] = useState<Array<Acteur>>([]);
   const [users, setUsers] = useState<Array<User>>([]);
-  const [program, setPrograms] = useState<Array<Voorstelling>>([]);
+  const [programs, setPrograms] = useState<Array<Voorstelling>>([]);
   const [error, setError] = useState<string | null>(null);
   const [content, setContent] = useState<JSX.Element | null>(null);
 
@@ -105,22 +105,38 @@ const AllMovies: React.FC = () => {
 
   const setUsersList = () => {
     const userList = (
-      <ul>
+      <div>
         {users.map((user) => (
-          <li key={user.id}>{user.voornaam}</li>
+          <div className='flex admin-item-container'>
+            <div key={user.id} className='item-info'>
+              <p>{user.voornaam} {user.achternaam}</p>
+              <p>{user.email}</p>
+            </div>
+            <div className='button-container'>
+              <button className='button'>Edit</button>
+            </div>
+          </div>          
         ))}
-      </ul>
+      </div>
     );
     setContent(userList);
   }
 
   const setProgramsList = () => {
     const programList = (
-      <ul>
-        {program.map((program) => (
-          <li key={program.id}>{program.film.titel}</li>
+      <div>
+        {programs.map((program) => (
+          <div className='flex admin-item-container'>
+            <div key={program.id} className='item-info'>
+              <p>{program.zaal.id}</p>
+              <p>{program.film.titel}</p>
+            </div>
+            <div className='button-container'>
+              <button className='button'>Edit</button>
+            </div>
+          </div>          
         ))}
-      </ul>
+      </div>
     );
     setContent(programList);
   }

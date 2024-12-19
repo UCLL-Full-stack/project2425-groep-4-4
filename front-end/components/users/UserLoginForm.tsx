@@ -70,8 +70,8 @@ const UserLoginForm: React.FC = () => {
     }
 
   return (
-    <>
-      <h3 className="px-0">Login</h3>
+    <div className="center">
+      <h2 className="center-text">Login</h2>
       {statusMessages && (
         <div className="row">
           <ul className="list-none mb-3 mx-auto ">
@@ -132,7 +132,7 @@ const UserLoginForm: React.FC = () => {
           Login
         </button>
       </form>
-    </>
+    </div>
   );
 };
 

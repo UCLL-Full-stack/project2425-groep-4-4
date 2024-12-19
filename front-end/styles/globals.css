@@ -476,7 +476,14 @@ form {
 form input {
   width: 15rem;
   padding: 0.5rem;
-  margin-bottom: 1.5rem;
   border-radius: 0.5rem;
   border: none;
+}
+
+.input-field-box {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  height: 10rem;
+  justify-content: space-between;
 }

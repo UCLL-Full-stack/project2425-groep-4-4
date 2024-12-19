@@ -90,3 +90,13 @@ export type TicketInput = {
     voorstelling?: VoorstellingInput
     user?: UserInput
 }
+
+export type StatusMessage = {
+    message: string;
+    type: "error" | "success";
+};
+
+export type UserLogin = {
+    email: string;
+    password: string;
+}

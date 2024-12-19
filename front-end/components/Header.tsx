@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  
   return (
     <header className="header flex wrap">
       <div className="flex logo-container header-section">
@@ -15,7 +17,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className='header-section end'>
-        <button className='button'>Login</button>
+        <button className='button' onClick={() => {window.location.href = '/login'}}>Login</button>
       </div>
       
     </header>

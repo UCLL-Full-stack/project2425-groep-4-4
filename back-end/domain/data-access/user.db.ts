@@ -3,11 +3,10 @@ import database from "./database"
 
 const users: User[] = []
 
-const createUser = async ({admin, voornaam, achternaam, email, password}: User): Promise<User> => {
+const createUser = async ({voornaam, achternaam, email, password}: User): Promise<User> => {
     try {
         const userPrisma = await database.user.create({
             data: {
-                admin,
                 voornaam,
                 achternaam,
                 email,
@@ -21,8 +20,16 @@ const createUser = async ({admin, voornaam, achternaam, email, password}: User):
     }   
 }
 
-const getUserByEmail = (email: string): User | undefined => {
-    return users.find(user => user.email === email)
+const getUserByEmail = async (email: string): Promise<User | null> => {
+    try {
+        const userPrisma = await database.user.findUnique({
+            where: { email }
+        })
+        return userPrisma ? User.from(userPrisma): null;
+    } catch (error) {
+        console.error("Database error:", error);
+        throw new Error(`Database error. See server log for details.`);
+    }
 }
 
 const getAllUsers = async (): Promise<User[]> => {

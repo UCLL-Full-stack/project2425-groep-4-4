@@ -1,5 +1,7 @@
 import { Zaal } from "@prisma/client";
 
+export type Role = 'admin' | 'regisseur' | 'user'
+
 export type ActeurInput = {
     id?: number;
     voornaam?: string;
@@ -37,16 +39,17 @@ export type TicketInput = {
 
 export type UserInput = {
     id?: number
-    admin?: boolean
-    voornaam?: string
-    achternaam?: string
-    email?: string
-    password?: string
+    role?: Role
+    voornaam: string
+    achternaam: string
+    email: string
+    password: string
 }
 
-export type VoorstellingCreateInput = {
-    zaal?: ZaalInput
-    film?: FilmInput
-    datum?: Date
-    tijdstip?: string
-}
+export type AuthenticationResponse = {
+    token: string
+    email: string
+    fullname: string
+    role: Role
+}   
+

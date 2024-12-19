@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import filmService from "@/service/filmService";
-import { Film } from "@/types/types";
+import { Film } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

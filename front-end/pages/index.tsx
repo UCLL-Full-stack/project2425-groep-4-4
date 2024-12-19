@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
 import styles from '../styles/home.module.css';
-import { Film } from '@/types/types';
+import { Film } from '@/types';
 import { useEffect, useState } from 'react';
 import filmService from '@/service/filmService';
 import FilmOverview from '@/components/FilmOverview';

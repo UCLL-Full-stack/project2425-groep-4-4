@@ -1,6 +1,11 @@
 /**
  * @swagger
- * components:
+ *  components:
+ *   securitySchemes:
+ *    bearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
  *   schemas:
  *     ActeurInput:
  *       type: object
@@ -42,6 +47,8 @@ const acteurRouter = express.Router();
  * @swagger
  * /acteur/create:
  *   post:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Maak een nieuwe acteur aan
  *     tags: [Acteurs]
  *     requestBody:
@@ -92,6 +99,8 @@ acteurRouter.post('/create', (req: Request, res: Response) => {
  * @swagger
  * /acteur/getAll:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Verkrijg een lijst van alle acteurs
  *     tags: [Acteurs]
  *     responses:
@@ -130,6 +139,8 @@ acteurRouter.get('/getAll', async (req: Request, res: Response) => {
  * @swagger
  * /acteur/{id}:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Get an acteur by id.
  *     tags: [Acteurs]
  *     parameters:

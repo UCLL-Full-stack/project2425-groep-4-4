@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { connect } from 'http2';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -82,9 +83,9 @@ async function main() {
   // Create users
   const users = await prisma.user.createMany({
     data: [
-      { admin: true, voornaam: "Admin", achternaam: "User", email: "admin@cinema.com", password: "admin123" },
-      { admin: false, voornaam: "John", achternaam: "Doe", email: "john.doe@example.com", password: "password123" },
-      { admin: false, voornaam: "Jane", achternaam: "Smith", email: "jane.smith@example.com", password: "password123" }
+      { role: 'admin', voornaam: "Admin", achternaam: "User", email: "admin@cinema.com", password: await bcrypt.hash('admin123', 12)}, 
+      { role: 'regisseur', voornaam: "John", achternaam: "Doe", email: "john.doe@example.com", password: await bcrypt.hash('password123', 12)},
+      { role: 'user', voornaam: "Jane", achternaam: "Smith", email: "jane.smith@example.com", password: await bcrypt.hash('password123', 12)}
     ]
   });
 

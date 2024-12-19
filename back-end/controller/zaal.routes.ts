@@ -1,6 +1,11 @@
 /**
  * @swagger
- * components:
+ *  components:
+ *   securitySchemes:
+ *    bearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
  *   schemas:
  *     ZaalInput:
  *       type: object
@@ -29,6 +34,8 @@ const zaalRouter = express.Router();
  * @swagger
  * /zaal/create:
  *   post:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Maak een nieuwe zaal aan
  *     tags: [Zalen]
  *     requestBody:
@@ -79,6 +86,8 @@ zaalRouter.post('/create', async (req: Request, res: Response) => {
  * @swagger
  * /zaal/getAll:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Verkrijg een lijst van alle zalen
  *     tags: [Zalen]
  *     responses:
@@ -117,6 +126,8 @@ zaalRouter.get('/getAll', async (req: Request, res: Response) => {
  * @swagger
  * /zaal/{id}:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Get a zaal by id.
  *     tags: [Zalen]
  *     parameters:

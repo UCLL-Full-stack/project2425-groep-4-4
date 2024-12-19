@@ -1,6 +1,11 @@
 /**
  * @swagger
- * components:
+ *  components:
+ *   securitySchemes:
+ *    bearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
  *   schemas:
  *     FilmInput:
  *       type: object
@@ -42,6 +47,8 @@ const filmRouter = express.Router();
  * @swagger
  * /film/create:
  *   post:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Maak een nieuwe film aan
  *     tags: [Films]
  *     requestBody:
@@ -92,6 +99,8 @@ filmRouter.post('/create', (req: Request, res: Response) => {
  * @swagger
  * /film/getAll:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Verkrijg een lijst van alle films
  *     tags: [Films]
  *     responses:
@@ -130,6 +139,8 @@ filmRouter.get('/getAll', async (req: Request, res: Response) => {
  * @swagger
  * /film/{id}:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Retrieve a film by its ID
  *     tags: [Films]
  *     description: Fetches a film from the database using its unique ID.

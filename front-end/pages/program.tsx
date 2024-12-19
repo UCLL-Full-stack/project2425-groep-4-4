@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
 import styles from '../styles/home.module.css';
-import { Voorstelling } from '@/types/types';
+import { Voorstelling } from '@/types';
 import { useEffect, useState } from 'react';
 import voorstellingService from '@/service/voorstellingService';
 import ProgramOverview from '@/components/ProgramOverview';

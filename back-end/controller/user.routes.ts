@@ -1,18 +1,59 @@
 /**
  * @swagger
- * components:
+ *  components:
+ *   securitySchemes:
+ *    bearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
  *   schemas:
+ *     AuthenticationResponse:
+ *         type: object
+ *         properties:
+ *           message:
+ *             type: string
+ *             description: Authentication response.
+ *           token:
+ *             type: string
+ *             description: JWT access token.
+ *           email:
+ *             type: string
+ *             description: User name.
+ *           fullname:
+ *            type: string
+ *            description: Full name.
+ *     AuthenticationRequest:
+ *         type: object
+ *         properties:
+ *           email:
+ *             type: string
+ *             description: email
+ *           password:
+ *             type: string
+ *             description: User password.
+ *     User:
+ *         type: object
+ *         properties:
+ *           id:
+ *             type: number
+ *             format: int64
+ *           password:
+ *             type: string
+ *             description: User password.
+ *           firstName:
+ *             type: string
+ *             description: First name.
+ *           lastName:
+ *             type: string
+ *             description: Last name.
+ *           email:
+ *             type: string
+ *             description: E-mail.
+ *           role:
+ *              $ref: '#/components/schemas/Role'
  *     UserInput:
  *       type: object
  *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *           description: "De unieke identificatie van de gebruiker."
- *         admin:
- *           type: boolean
- *           example: false
- *           description: "Geeft aan of de gebruiker admin-rechten heeft."
  *         voornaam:
  *           type: string
  *           example: "Jan"
@@ -29,11 +70,9 @@
  *           type: string
  *           example: "veiligWachtwoord123"
  *           description: "Het wachtwoord van de gebruiker."
- *         tickets:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/TicketInput'
- *           description: "Een lijst van tickets die aan de gebruiker zijn toegewezen."
+ *     Role:
+ *         type: string
+ *         enum: [user, admin, regisseur]
  */
 import express, {Request, Response} from 'express';
 import { UserInput } from '../types';
@@ -45,45 +84,26 @@ const userRouter = express.Router();
  * @swagger
  * /user/create:
  *   post:
- *     summary: Maak een nieuwe gebruiker aan
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UserInput'
- *     responses:
- *       200:
- *         description: Gebruiker succesvol aangemaakt
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "success"
- *                 data:
- *                   $ref: '#/components/schemas/UserInput'
- *       400:
- *         description: Fout bij het aanmaken van de gebruiker
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 message:
- *                   type: string
- *                   example: "Foutmelding hier."
+ *      summary: Create a user
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserInput'
+ *      responses:
+ *         200:
+ *            description: The created user object
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/User'
  */
-userRouter.post('/create', (req: Request, res: Response) => {
+userRouter.post('/create', async (req: Request, res: Response) => {
     try {
         const user = <UserInput>req.body;
-        const result = userService.createUser(user);
+        const result = await userService.createUser(user);
         res.status(200).json(result);
     }
     catch (error) {
@@ -95,6 +115,8 @@ userRouter.post('/create', (req: Request, res: Response) => {
  * @swagger
  * /user/getAll:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Verkrijg een lijst van alle gebruikers
  *     tags: [Users]
  *     responses:
@@ -105,7 +127,7 @@ userRouter.post('/create', (req: Request, res: Response) => {
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/UserInput'
+ *                 $ref: '#/components/schemas/User'
  *       400:
  *         description: Fout bij het ophalen van de gebruikers
  *         content:
@@ -150,7 +172,7 @@ userRouter.get('/getAll', async (req: Request, res: Response) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/UserInput'
+ *               $ref: '#/components/schemas/User'
  */
 userRouter.get('/:id', async (req: Request, res: Response) => { 
     try {
@@ -160,5 +182,36 @@ userRouter.get('/:id', async (req: Request, res: Response) => {
         res.status(400).json({status: 'error', message: (error as Error).message});
     }
 });
+
+
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *      summary: Login using username/password. Returns an object with JWT token and user name when succesful.
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/AuthenticationRequest'
+ *      responses:
+ *         200:
+ *            description: The created user object
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/AuthenticationResponse'
+ */
+userRouter.post('/login', async (req: Request, res: Response) => {
+    try {
+        const user = <UserInput>req.body;
+        const response = await userService.authenticate(user)
+        res.status(200).json({message: 'authentication succesful', ...response});
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+})
 
 export { userRouter };

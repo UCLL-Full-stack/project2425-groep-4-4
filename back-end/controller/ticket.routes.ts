@@ -1,6 +1,11 @@
 /**
  * @swagger
- * components:
+ *  components:
+ *   securitySchemes:
+ *    bearerAuth:
+ *     type: http
+ *     scheme: bearer
+ *     bearerFormat: JWT
  *   schemas:
  *     TicketInput:
  *       type: object
@@ -27,6 +32,8 @@ const ticketRouter = express.Router();
  * @swagger
  * /ticket/create:
  *   post:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Maak een nieuw ticket aan
  *     tags: [Tickets]
  *     requestBody:
@@ -77,6 +84,8 @@ const ticketRouter = express.Router();
  * @swagger
  * /ticket/getAll:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Verkrijg een lijst van alle tickets
  *     tags: [Tickets]
  *     responses:

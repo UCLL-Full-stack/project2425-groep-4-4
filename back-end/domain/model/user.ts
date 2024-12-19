@@ -3,18 +3,19 @@ import { Film } from "./film"
 import { Ticket } from "./ticket"
 import { Voorstelling } from "./voorstelling"
 import { User as UserPrisma, Ticket as TicketPrisma } from '@prisma/client';
+import { Role } from "../../types";
 
 export class User {
     readonly id?: number
-    readonly admin: boolean
+    readonly role: Role
     readonly voornaam: string
     readonly achternaam: string
     readonly email: string
     readonly password: string
 
-    constructor(user: {id?: number; admin: boolean; voornaam: string; achternaam: string; email: string; password: string;}) {
+    constructor(user: {id?: number; role: Role; voornaam: string; achternaam: string; email: string; password: string;}) {
         this.id = user.id
-        this.admin = user.admin
+        this.role = user.role
         this.voornaam = user.voornaam
         this.achternaam = user.achternaam
         this.email = user.email
@@ -26,8 +27,8 @@ export class User {
         return this.id
     }
 
-    getAdmin(): boolean {
-        return this.admin
+    getRole(): Role {
+        return this.role
     }
 
     getVoornaam(): string {
@@ -46,12 +47,12 @@ export class User {
         return this.password
     }
 
-    validate(User: {admin: boolean; voornaam: string; achternaam: string; email: string; password: string}) {
+    validate(User: {role: Role; voornaam: string; achternaam: string; email: string; password: string}) {
         if (!User.voornaam) {
             throw new Error("Voornaam is verplicht")
         }
-        if (typeof User.admin !== 'boolean') {
-            throw new Error('adminveld is verplicht');
+        if (!User.role) {
+            throw new Error('rol is verplicht');
         }
         if (!User.achternaam) {
             throw new Error("Achternaam is verplicht")
@@ -73,7 +74,7 @@ export class User {
 
     static from({
         id,
-        admin,
+        role,
         voornaam,
         achternaam,
         email,
@@ -81,7 +82,7 @@ export class User {
     }: UserPrisma) {
         return new User({
             id,
-            admin,
+            role: role as Role,
             voornaam,
             achternaam,
             email,

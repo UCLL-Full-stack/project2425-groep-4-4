@@ -77,7 +77,6 @@ export type VoorstellingInput = {
 }
 
 export type UserInput = {
-    admin?: boolean
     voornaam?: string
     achternaam?: string
     email?: string

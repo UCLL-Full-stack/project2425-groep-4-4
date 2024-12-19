@@ -8,38 +8,45 @@ import filmService from '@/service/filmService';
 import FilmOverview from '@/components/FilmOverview';
 import useInterval from 'use-interval';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 
 const allMovies: React.FC = () => {
-  const [films, setFilms] = useState<Array<Film>>();
-  const [error, setError] = useState<String>();
 
   const getFilms = async () => {
-    setError("");
-
-    const response = await filmService.getAllFilms()
-    
-    if (!response.ok) {
-      if (response.status === 401) {
-        setError("You are not authorized to view this page. Please log in.");
-      }
-      else {
-        setError(response.statusText);
-      }
-
-    } else {
-        const films = await response.json();
-        setFilms(films);
+    const filmsResponse = await filmService.getAllFilms();
+    if (filmsResponse.ok) {
+      const films = await filmsResponse.json();
+      return films;
     }
   };
 
-  useEffect(() => {
-    getFilms();
-  }, []);
+  const { data, isLoading, error } = useSWR("films", getFilms, {
+    refreshInterval: 1000,
+  });
 
-  useInterval(() => {
-    getFilms();
-  }, 5000)
-  
+  if (isLoading) {
+    return (
+      <>
+      <Header />
+      <main className={styles.main}>    
+        <p>Loading...</p>
+      </main>
+    </>
+    )
+  }
+
+  if (error) {
+    return (
+      <>
+
+      <Header />
+      <main className={styles.main}>
+        <p>Error: {error}</p>
+      </main>
+    </>
+    )
+  }
+
   return (
     <>
       <Head>
@@ -55,7 +62,7 @@ const allMovies: React.FC = () => {
         </span>
         <>
           <FilmOverview
-            films={films || []}
+            films={data}
           />
         </>
       </main>

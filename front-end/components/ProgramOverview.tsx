@@ -1,7 +1,7 @@
-import { Voorstelling } from "@/types";
+import { UserStorage, Voorstelling } from "@/types";
 import { Film } from "@/types";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
     voorstellingen: Array<Voorstelling>;
@@ -9,6 +9,17 @@ type Props = {
 
 const ProgramOverview: React.FC<Props> = ({ voorstellingen }: Props) => {
     const router = useRouter();
+          const [loggedInUser, setLoggedInUser] = useState<UserStorage | null>(null);
+        
+          useEffect(() => {
+            const user = sessionStorage.getItem('loggedInUser');
+            setLoggedInUser(user ? JSON.parse(user) : null);
+          }, []);
+    
+        if (!loggedInUser) {
+            return <p>Log in om voorstellingen te bekijken.</p>;
+        }
+        
 
     const goToVoorstellingPage = (id: number) => {
         router.push("/voorstelling/" + id)

@@ -13,7 +13,7 @@ const createUser = async ({voornaam, achternaam, email, password}: UserInput): P
     const exisiting = await userDb.getUserByEmail(email);
 
     if (exisiting) {
-        throw new Error(`User with email ${email} does not exist.`);
+        throw new Error(`User with email ${email} already exist.`);
     }
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({role: 'user', voornaam, achternaam, email, password: hashedPassword});

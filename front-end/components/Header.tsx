@@ -20,6 +20,10 @@ const Header = () => {
   const handleLogin = () => {
     window.location.href = '/login';
   }
+
+  const handleSignup = () => {
+    window.location.href = '/signup';
+  }
   
   return (
     <header className="header flex wrap">
@@ -37,6 +41,7 @@ const Header = () => {
         </ul>
       </nav>
       <div className='header-section end'>
+      {!loggedInUser && <button className='button' onClick={handleSignup}>Signup</button>}
         {!loggedInUser && <button className='button' onClick={handleLogin}>Login</button>}
         {loggedInUser && <button className='button' onClick={handleLogout}>Logout</button>}
       </div>

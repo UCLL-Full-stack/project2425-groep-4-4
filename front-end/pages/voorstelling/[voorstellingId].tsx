@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import voorstellingService from "@/service/voorstellingService";
-import { Voorstelling } from "@/types/types";
+import { Voorstelling } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

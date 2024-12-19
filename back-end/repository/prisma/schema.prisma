@@ -41,7 +41,7 @@ model Ticket {
 
 model User {
   id        Int       @id @default(autoincrement())
-  admin     Boolean
+  role     String     @default("user")
   voornaam  String
   achternaam String
   email     String    @unique

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Header from '../components/Header';
 import styles from '../styles/home.module.css';
-import { Film } from '@/types/types';
+import { Film } from '@/types';
 import { useEffect, useState } from 'react';
 import filmService from '@/service/filmService';
 import FilmOverview from '@/components/FilmOverview';
@@ -16,12 +16,20 @@ const allMovies: React.FC = () => {
   const getFilms = async () => {
     setError("");
 
-    const responses = await Promise.all([
-      filmService.getAllFilms()
-    ]);
-    const [filmResponse] = responses;
-    const films = await filmResponse.json();
-    setFilms(films);
+    const response = await filmService.getAllFilms()
+    
+    if (!response.ok) {
+      if (response.status === 401) {
+        setError("You are not authorized to view this page. Please log in.");
+      }
+      else {
+        setError(response.statusText);
+      }
+
+    } else {
+        const films = await response.json();
+        setFilms(films);
+    }
   };
 
   useEffect(() => {
@@ -47,7 +55,7 @@ const allMovies: React.FC = () => {
         </span>
         <>
           <FilmOverview
-            films={films}
+            films={films || []}
           />
         </>
       </main>

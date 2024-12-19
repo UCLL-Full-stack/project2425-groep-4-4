@@ -1,5 +1,5 @@
-import { Voorstelling } from "@/types/types";
-import { Film } from "@/types/types";
+import { Voorstelling } from "@/types";
+import { Film } from "@/types";
 import { useRouter } from "next/router";
 import React from "react";
 

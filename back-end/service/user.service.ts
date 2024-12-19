@@ -1,20 +1,44 @@
+import { get } from "http"
 import userDb from "../domain/data-access/user.db"
 import { User } from "../domain/model/user"
-import { UserInput } from "../types"
+import { UserInput, AuthenticationResponse } from "../types"
 import bcrypt from "bcrypt"
+import { generateJwtToken } from "../util/jwt"
 
-const createUser = async ({admin, voornaam, achternaam, email, password}: UserInput): Promise<User> => {  
-    if (!admin || !voornaam || !achternaam || !email || !password) {
+const createUser = async ({voornaam, achternaam, email, password}: UserInput): Promise<User> => {  
+    if (!voornaam || !achternaam || !email || !password) {
         throw new Error("Voornaam, achternaam, email en password zijn verplicht")
     }
 
-    if (userDb.getUserByEmail(email)) {
-        throw new Error(`User met email ${email} bestaat al`)
+    const exisiting = await userDb.getUserByEmail(email);
+
+    if (exisiting) {
+        throw new Error(`User with email ${email} does not exist.`);
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({admin, voornaam, achternaam, email, password: hashedPassword});
+    const user = new User({role: 'user', voornaam, achternaam, email, password: hashedPassword});
 
     return userDb.createUser(user);
+}
+
+const authenticate = async ({email, password}: UserInput): Promise<AuthenticationResponse> => {
+    const user = await userDb.getUserByEmail(email);
+
+    if (!user) {
+        throw new Error(`User with email ${email} does not exist.`);
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+        throw new Error("Invalid password");
+    }
+
+    return {
+        token: generateJwtToken({email, role: user.role}),
+        email: user.email,
+        fullname: `${user.voornaam} ${user.achternaam}`,
+        role: user.role
+    }
 }
 
 const getAllUsers = async (): Promise<User[]> => {
@@ -39,5 +63,6 @@ const getUserById = async (id: number): Promise<User> => {
 export default {
     createUser,
     getAllUsers,
-    getUserById
+    getUserById,
+    authenticate
 }

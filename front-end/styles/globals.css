@@ -247,6 +247,18 @@ h3 {
   transition: 0.2s;
 }
 
+.logout-button {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 5rem;
+  background-color: #ff0000;
+  color: white;
+  font-family: "InterVariable";
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
 .button-big {
   padding: 1rem 4rem;
   border: none;

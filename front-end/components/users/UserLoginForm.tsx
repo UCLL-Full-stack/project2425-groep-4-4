@@ -64,9 +64,7 @@ const UserLoginForm: React.FC = () => {
         } else if (response.status === 401) {
             const { errorMessage } = await response.json();
             setStatusMessages([{message: errorMessage ,type: "error",}]);
-        } else {
-            setStatusMessages([{message: "An error occurred. Please try again later.",type: "error",}]);
-        }
+        } else {}
     }
 
   return (

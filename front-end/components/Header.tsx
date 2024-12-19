@@ -31,7 +31,7 @@ const Header = () => {
         <ul className='flex wrap'>
           <li><a href="/allMovies">All Movies</a></li>
           <li><a href="/program">Program</a></li>
-          {loggedInUser && loggedInUser.role === 'admin' &&
+          {loggedInUser?.role === 'admin' &&
             <li><a href="/admin">Admin</a></li>
           }
         </ul>

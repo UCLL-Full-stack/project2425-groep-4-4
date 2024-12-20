@@ -29,8 +29,8 @@ const UserDemoOverview: React.FC = () => {
   ];
 
   return (
-    <div>
-      <h2>Gebruikers Tabel</h2>
+    <div className='center users-table'>
+      <h2 className='center-text'>Gebruikers Tabel</h2>
       <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>

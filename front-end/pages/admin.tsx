@@ -115,7 +115,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+              <button className='button red-button' onClick={toggleConfirm}>Delete</button>
             </div>
           </div>          
         ))}
@@ -135,7 +135,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+              <button className='button red-button' onClick={toggleConfirm}>Delete</button>
             </div>
           </div>          
         ))}
@@ -155,7 +155,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+              <button className='button red-button' onClick={toggleConfirm}>Delete</button>
             </div>
           </div>          
         ))}

@@ -39,7 +39,7 @@ const ProgramOverview: React.FC<Props> = ({ voorstellingen }: Props) => {
                 >
                     <div>
                         <img 
-                            src={`./images/cover-${voorstelling.film.id}.jpg`}
+                            src={`./images/cover-${voorstelling.film.titel.replace(/ /g, '_')}.jpg`}
                             alt="movie cover"
                             className="movie-icon"
                         />

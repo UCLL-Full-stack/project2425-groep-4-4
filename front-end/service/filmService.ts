@@ -44,11 +44,27 @@ const createFilm = async (film: FilmInput) => {
   return response;
 }
 
+const deleteFilm = async (id: number) => {
+  const loggedInUser = sessionStorage.getItem('loggedInUser');
+  const token = loggedInUser ? JSON.parse(loggedInUser).token : null;
+  console.log(JSON.stringify({ id }))
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/film/delete', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ id }),
+  });
+  return response;
+}
+
   
 const filmService = {
   getAllFilms,
   getFilmById,
-  createFilm
+  createFilm,
+  deleteFilm
 };
 
 export default filmService;

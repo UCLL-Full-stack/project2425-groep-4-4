@@ -103,7 +103,7 @@ const ReadVoorstellingById = () => {
             <Header />
             <main>
                 <div className="container flex details-container">
-                    <img className="cover-img" src={`/images/cover-${data.id}.jpg`} alt="movie cover" />
+                    <img className="cover-img" src={`/images/cover-${data.film.titel.replace(/ /g, '_')}.jpg`} alt="movie cover" />
                     <div>
                         <div className="details-content">
                             <h1>{data.film.titel}</h1>

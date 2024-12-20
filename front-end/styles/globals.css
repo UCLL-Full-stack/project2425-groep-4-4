@@ -248,11 +248,11 @@ h3 {
   margin: 1rem;
 }
 
-.logout-button {
+.red-button {
   background-color: #ff0000;
 }
 
-.signup-button {
+.green-button {
   background-color: green;
 }
 
@@ -273,11 +273,11 @@ h3 {
   background-color: #0056b3;
 }
 
-.logout-button:hover {
+.red-button:hover {
   background-color: #a60000;
 }
 
-.signup-button:hover {
+.green-button:hover {
   background-color: rgb(0, 179, 0);
 }
 .navigation ul {

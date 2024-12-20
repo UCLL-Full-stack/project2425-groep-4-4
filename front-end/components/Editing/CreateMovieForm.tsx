@@ -80,7 +80,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
     };
   
     return (
-      <div className="center">
+      <div className="center form-container">
         <h2 className="center-text">Create Movie</h2>
         {statusMessages && (
           <div className="row">
@@ -100,7 +100,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
           </div>
         )}
         <form onSubmit={handleSubmit}>
-          <div className="mt-2">
+          <div className="mt-2 fixed-height-big">
             <div>
               <label htmlFor="titelInput" className="block mb-2 text-sm font-medium">
                 Titel
@@ -115,7 +115,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
               {titelError && <div className="text-red-800">{titelError}</div>}
             </div>
           </div>
-          <div className="mt-2">
+          <div className="mt-2 fixed-height-big">
             <label htmlFor="beschrijvingInput" className="block mb-2 text-sm font-medium">
               Beschrijving
             </label>
@@ -127,7 +127,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
             />
             {beschrijvingError && <div className="text-red-800">{beschrijvingError}</div>}
           </div>
-          <div className="mt-2">
+          <div className="mt-2 fixed-height-big">
             <label htmlFor="speeltijdInput" className="block mb-2 text-sm font-medium">
               Speeltijd
             </label>
@@ -139,7 +139,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
             />
             {speeltijdError && <div className="text-red-800">{speeltijdError}</div>}
           </div>
-          <div className="mt-2">
+          <div className="mt-2 fixed-height-big">
             <label htmlFor="acteursInput" className="block mb-2 text-sm font-medium">
               Acteurs
             </label>
@@ -172,7 +172,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
                 </select>
             {acteursError && <div className="text-red-800">{acteursError}</div>}
           </div>
-          <div className="mt-2">
+          <div className="mt-2 fixed-height-big">
             <label className="block mb-2 text-sm font-medium">Selected Acteurs</label>
             <ul>
               {acteurs.map((acteur) => (
@@ -181,7 +181,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
                   <button
                     type="button"
                     onClick={() => handleActorRemove(acteur)}
-                    className="text-red-600"
+                    className="button red-button"
                   >
                     Remove
                   </button>
@@ -190,7 +190,7 @@ const CreateMovieForm: React.FC<Props> = ({ acteurList }: Props) => {
             </ul>
           </div>
           <button
-            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="button"
             type="submit"
           >
             Add Movie

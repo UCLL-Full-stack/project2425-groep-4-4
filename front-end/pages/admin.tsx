@@ -185,8 +185,7 @@ const AllMovies: React.FC = () => {
         )}
         {isConfirmVisible && (
           <div className='popup'>
-            <h2>Popup Content</h2>
-            <p>This is the popup content.</p>
+            <p className='center-text'>Are you sure?</p>
             <button onClick={toggleConfirm} className='button green-button'>
               Yes
             </button>

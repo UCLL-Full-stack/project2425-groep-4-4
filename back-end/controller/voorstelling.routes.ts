@@ -75,8 +75,12 @@
  *       tijdstip:
  *        type: string
  *        example: "19:30"
- * 
- * 
+ *     DeleteVoorstelling:
+ *       type: object
+ *       properties:
+ *         voorstellingId:         
+ *           type: number
+ *           format: int64
  */
 import express, {Request, Response} from 'express';
 import { VoorstellingInput, VoorstellingUpdate } from '../types';
@@ -251,5 +255,41 @@ voorstellingRouter.put('/update', async (req: Request, res: Response) => {
         res.status(400).json({status: 'error', message: (error as Error).message});
         }
     })
+
+/**
+ * @swagger
+ * /voorstelling/delete:
+ *   delete:
+ *     summary: Delete a voorstelling in the database.
+ *     tags: [Voorstellingen]
+ *     description: Deletes a voorstelling based on the provided data.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             $ref: '#/components/schemas/DeleteVoorstelling'
+ *     responses:
+ *       200:
+ *         description: Successful deletion of voorstelling.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/VoorstellingInput'
+ *       500:
+ *         description: Internal server error.
+ * 
+ */
+voorstellingRouter.delete('/delete', async (req: Request, res: Response) => {
+    try {
+        const voorstellingId = <number>req.body.voorstellingId;
+
+        const user = await voorstellingService.deleteVoorstellingWithId({ voorstellingId });
+        res.status(200).json(user)
+    }
+    catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
 
 export { voorstellingRouter };

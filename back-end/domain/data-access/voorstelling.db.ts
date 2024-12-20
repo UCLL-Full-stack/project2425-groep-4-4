@@ -67,9 +67,47 @@ const updateVoorstelling = async ({ id, zaal, film, datum, tijdstip, plaatsen }:
     }
 }
 
+const getVoorstellingenByFilm = async ({ filmId }: { filmId: number }): Promise<Voorstelling[] | null> => {
+    try {
+        const voorstellingPrisma = await database.voorstelling.findMany({
+            where: { filmId },
+            include: {
+                zaal: true,
+                film: true
+            }
+        });
+
+        return voorstellingPrisma ? voorstellingPrisma.map((voorstellingPrisma: any) => Voorstelling.from(voorstellingPrisma)) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
+
+const deleteVoorstellingWithId = async ({voorstellingId}: {voorstellingId: number}): Promise<Voorstelling> => {
+    try {
+        const voorstellingPrisma = await database.voorstelling.delete({
+            where: {
+                id: voorstellingId,
+            },
+            include: {
+                zaal: true,
+                film: true
+            }
+        });
+        return Voorstelling.from(voorstellingPrisma);
+    } catch (error) {
+        console.log(error);
+        console.error('Database error:', error);
+        throw new Error('error database, see server log for details');
+    }
+}
+
 export default {
     createVoorstelling,
     getVoorstellingById,
     getAllVoorstellingen,
-    updateVoorstelling
+    updateVoorstelling,
+    getVoorstellingenByFilm,
+    deleteVoorstellingWithId
 }

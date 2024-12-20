@@ -37,9 +37,30 @@ const getActeurById = async (id: number): Promise<Acteur> => {
     return acteur;
 };
 
+const deleteActeurWithId = async ({acteurId}: {acteurId: number}): Promise<Acteur> => {
+    const acteur = await acteurDb.deleteActeurWithId({ acteurId });
+    if (!acteur) throw new Error(`Acteur with id ${acteurId} does not exist.`);
+    return acteur;
+}
+
+const updateActeur = async ({ id, voornaam, achternaam, nationaliteit, geboortedatum }: Acteur) => {
+    if (!voornaam || !achternaam || !nationaliteit || !geboortedatum) {
+        throw new Error("Voornaam, achternaam, nationaliteit en geboortedatum zijn verplicht")
+    }
+
+    if (id && getActeurById(id) === null) {
+        throw new Error('Voorstelling not found');
+    }
+
+    const acteur = new Acteur({id, voornaam, achternaam, nationaliteit, geboortedatum})
+    return acteurDb.updateActeur(acteur);
+}
+
 export default {
     createActeur,
     getActeurByFullName,
     getAllActeurs,
-    getActeurById
+    getActeurById,
+    deleteActeurWithId,
+    updateActeur
 }

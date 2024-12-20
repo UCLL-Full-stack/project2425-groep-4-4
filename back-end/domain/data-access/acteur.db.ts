@@ -36,9 +36,43 @@ const getActeurById = async ({ id }: { id: number }): Promise<Acteur | null> => 
     }
 };
 
+const deleteActeurWithId = async ({ acteurId }: { acteurId: number }): Promise<Acteur> => {
+    try {
+        const acteurPrisma = await database.acteur.delete({
+            where: {
+                id: acteurId,
+            }
+        });
+        return Acteur.from(acteurPrisma);
+    } catch (error) {
+        console.error('Database error:', error);
+        throw new Error('error database, see server log for details');
+    }
+}
+
+const updateActeur = async ({ id, voornaam, achternaam, nationaliteit, geboortedatum }: Acteur) => {
+    try {
+        const acteurPrisma = await database.acteur.update({
+            where: { id },
+            data: { 
+                voornaam, 
+                achternaam, 
+                nationaliteit, 
+                geboortedatum
+            }
+        });
+        return Acteur.from(acteurPrisma);
+    } catch (error) {
+        console.error('Database error:', error);
+        throw new Error('error database, see server log for details');
+    }
+}
+
 export default {
     createActeur,
     getActeurByFullName,
     getAllActeurs,
-    getActeurById
+    getActeurById,
+    deleteActeurWithId,
+    updateActeur
 }

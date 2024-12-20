@@ -41,11 +41,6 @@ const getFilmById = async ({ id }: { id: number }): Promise<Film | null> => {
     }
 };
 
-const getFilmByName = (titel: string): Film | undefined => {
-    return films.find(film => film.titel === titel)
-}
-
-
 const getAllFilms = async(): Promise<Film[]> => {
     try {
         const filmsPrisma = await database.film.findMany({
@@ -59,9 +54,55 @@ const getAllFilms = async(): Promise<Film[]> => {
     }
 };
 
+const deleteFilmWithId = async ({ filmId }: { filmId: number }): Promise<Film> => {
+    try {
+        const filmsPrisma = await database.film.delete({
+            where: {
+                id: filmId,
+            },
+            include: {
+                acteurs: true,
+            },
+        });
+        console.log(filmsPrisma)
+        return Film.from(filmsPrisma);
+    } catch (error) {
+        console.error('Database error:', error);
+        throw new Error('error database, see server log for details');
+    }
+}
+
+const updateFilm = async ({ id, titel, speeltijd, beschrijving, acteurs }: Film) => {
+    try {
+        const filmPrisma = await database.film.update({
+            where: { id },
+            data: {
+                titel,
+                speeltijd,
+                beschrijving,
+                acteurs: {
+                    set: [],
+                    connect: acteurs.map(acteur => ({ id: acteur.id })),
+                },
+            },
+            include: {
+                acteurs: true,
+            },
+        });
+        return Film.from(filmPrisma);
+    } catch (error) {
+        console.error('Database error:', error);
+        throw new Error('error database, see server log for details');
+    }
+};
+
+
+
+
 export default {
     createFilm,
     getFilmById,
-    getFilmByName,
-    getAllFilms
+    getAllFilms,
+    deleteFilmWithId,
+    updateFilm
 }

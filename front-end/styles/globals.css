@@ -511,3 +511,7 @@ form input {
 .text-red-800 {
   color: #ff0000;
 }
+
+.text-green-800 {
+  color: rgb(0, 170, 0);
+}

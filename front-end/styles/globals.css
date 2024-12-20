@@ -477,11 +477,16 @@ form {
 form input {
   padding: 0.5rem;
   border-radius: 0.5rem;
+  width: 15rem;
   border: none;
 }
 
 .fixed-height {
   height: 3rem;
+}
+
+.fixed-height-big {
+  height: 5rem;
 }
 
 .form-container h2 {

@@ -1,4 +1,4 @@
-import { Voorstelling, VoorstellingInput } from "@/types";
+import { Voorstelling, VoorstellingInput, VoorstellingUpdate } from "@/types";
 
 const getAllVoorstellingen = async () => {
   const loggedInUser = sessionStorage.getItem('loggedInUser');
@@ -46,10 +46,26 @@ const createVoorstelling = async (voorstelling: VoorstellingInput) => {
   return response;
 }
 
+const UpdateVoorstelling = async (voorstelling: VoorstellingUpdate) => {
+  const loggedInUser = sessionStorage.getItem('loggedInUser');
+  const token = loggedInUser ? JSON.parse(loggedInUser).token : null;
+
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/voorstelling/update', {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(voorstelling)
+  })
+  return response;
+}
+
 const voorstellingService = {
   getAllVoorstellingen,
   getVoorstellingById,
-  createVoorstelling
+  createVoorstelling,
+  UpdateVoorstelling
 };
   
 export default voorstellingService;

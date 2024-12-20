@@ -52,11 +52,25 @@ const loginUser = (user: UserLogin) => {
     });
 };
 
+const getUserByEmail = async (email: string) => {
+  const loggedInUser = sessionStorage.getItem('loggedInUser');
+  const token = loggedInUser ? JSON.parse(loggedInUser).token : null;
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/user/email' , {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+    }
+  });
+  return response;
+};
+
 const UserService = {
     loginUser,
     getAllUsers,
     getUserById,
-    createUser
+    createUser,
+    getUserByEmail
 };
 
 export default UserService;

@@ -5,12 +5,12 @@ import { Film as FilmPrisma, Ticket as TicketPrisma, User as UserPrisma, Voorste
 export class Ticket {
     readonly id?: number
     readonly voorstelling: Voorstelling
-    readonly user?: User
+    readonly user: User
 
-    constructor(ticket: {id?: number; voorstelling: Voorstelling; user?: User | null;}) {
+    constructor(ticket: {id?: number; voorstelling: Voorstelling; user: User;}) {
         this.id = ticket.id
         this.voorstelling = ticket.voorstelling
-        this.user = ticket.user ?? undefined
+        this.user = ticket.user
         this.validate(ticket)
     }
 
@@ -22,7 +22,7 @@ export class Ticket {
         return this.voorstelling
     }
 
-    getUser(): User | undefined {
+    getUser(): User {
         return this.user
     }   
 
@@ -36,11 +36,12 @@ export class Ticket {
         id,
         voorstelling,
         user,
-    }: TicketPrisma & { voorstelling: VoorstellingPrisma; user: UserPrisma | null}) {
+    }: TicketPrisma & { voorstelling: VoorstellingPrisma; user: UserPrisma }) {    
         return new Ticket({
             id,
-            voorstelling: Voorstelling.from(voorstelling as VoorstellingPrisma & { zaal: ZaalPrisma, film: FilmPrisma }),  
-            user: user ? User.from(user) : undefined
+            voorstelling: Voorstelling.from(voorstelling as VoorstellingPrisma & { zaal: ZaalPrisma; film: FilmPrisma }),
+            user: User.from(user),
         });
     }
+    
 }

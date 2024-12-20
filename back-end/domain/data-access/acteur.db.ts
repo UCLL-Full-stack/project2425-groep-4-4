@@ -17,8 +17,6 @@ const getAllActeurs = async(): Promise<Acteur[]> => {
     try {
         const acteursPrisma = await database.acteur.findMany({
         });
-        console.log("db:");
-        console.log(acteursPrisma);
         return acteursPrisma.map((acteurPrisma: any) => Acteur.from(acteurPrisma))
     } catch (error) {
         throw new Error(`Database error. See server log for details.`);

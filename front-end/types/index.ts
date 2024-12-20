@@ -28,7 +28,7 @@ export type Voorstelling = {
 export type Zaal = {
     id: number
     plaatsen: number
-    voorstellingen: Voorstelling[]
+    zaalnummer: number
 }
 
 export type Ticket = {
@@ -77,7 +77,6 @@ export type VoorstellingInput = {
 }
 
 export type UserInput = {
-    admin?: boolean
     voornaam?: string
     achternaam?: string
     email?: string
@@ -86,8 +85,8 @@ export type UserInput = {
 
 export type TicketInput = {
     id?: number
-    voorstelling?: VoorstellingInput
-    user?: UserInput
+    voorstellingId?: number
+    userId?: number
 }
 
 export type StatusMessage = {
@@ -101,8 +100,19 @@ export type UserLogin = {
 }
 
 export type UserStorage = {
+    id: number;
     token: string;
     email: string;
     fullname: string;
     role: string;
+}
+
+export type VoorstellingUpdate =  {
+    id?: number
+    zaalId?: number
+    filmId?: number
+    datum?: Date
+    tijdstip?: string
+    plaatsen?: number
+
 }

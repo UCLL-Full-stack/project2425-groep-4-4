@@ -3,11 +3,29 @@ import database from "./database"
 
 const films: Film[] = []
 
-const createFilm = ({titel, speeltijd, beschrijving}: Film): Film => {
-    const film = new Film({titel, speeltijd, beschrijving, acteurs: []})
-    films.push(film)
-    return film
-}
+const createFilm = async (film: Film): Promise<Film> => {
+    try {
+        const filmPrisma = await database.film.create({
+            data: {
+                titel: film.titel,
+                speeltijd: film.speeltijd,
+                beschrijving: film.beschrijving,
+                acteurs: { connect: film.acteurs.map(acteur => ({ id: acteur.id })) }  
+            },
+            include: {
+                acteurs: true,
+            },
+        });
+        console.log(filmPrisma)
+        return Film.from({
+            ...filmPrisma,
+            acteurs: filmPrisma.acteurs,
+        });
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+};
 
 const getFilmById = async ({ id }: { id: number }): Promise<Film | null> => {
     try {

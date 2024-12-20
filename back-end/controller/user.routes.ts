@@ -27,9 +27,11 @@
  *         properties:
  *           email:
  *             type: string
+ *             example: "admin@cinema.com"
  *             description: email
  *           password:
  *             type: string
+ *             example: "admin123"
  *             description: User password.
  *     User:
  *         type: object
@@ -73,6 +75,12 @@
  *     Role:
  *         type: string
  *         enum: [user, admin, regisseur]
+ *     email:
+ *      type: object
+ *      properties:
+ *        email:
+ *         type: string
+ *         example: "admin@cinema.com"
  */
 import express, {Request, Response} from 'express';
 import { UserInput } from '../types';
@@ -177,6 +185,36 @@ userRouter.get('/getAll', async (req: Request, res: Response) => {
 userRouter.get('/:id', async (req: Request, res: Response) => { 
     try {
         const user = await userService.getUserById(Number(req.params.id));
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
+ * /user/email:
+ *   get:
+ *     summary: Get an user by email.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/email'
+ *     responses:
+ *       200:
+ *         description: An User object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
+userRouter.get('/email', async (req: Request, res: Response) => { 
+    try {
+        const email = req.body
+        const user = await userService.getUserByEmail(email);
         res.status(200).json(user);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});

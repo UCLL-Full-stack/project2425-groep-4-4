@@ -3,8 +3,8 @@ import database from "./database"
 
 const zalen: Zaal[] = []
 
-const createZaal = ({plaatsen}: Zaal): Zaal => {
-    const zaal = new Zaal({plaatsen})
+const createZaal = ({plaatsen, zaalnummer}: Zaal): Zaal => {
+    const zaal = new Zaal({plaatsen, zaalnummer})
     zalen.push(zaal)
     return zaal
 }
@@ -12,7 +12,6 @@ const createZaal = ({plaatsen}: Zaal): Zaal => {
 const getAllZalen = async (): Promise<Zaal[]> => {
     try {
         const zalenPrisma = await database.zaal.findMany();
-        console.log(zalenPrisma)
         return zalenPrisma.map((zaalPrisma) => Zaal.from(zaalPrisma))
     } catch (error) {
         throw new Error(`Database error. See server log for details.`);

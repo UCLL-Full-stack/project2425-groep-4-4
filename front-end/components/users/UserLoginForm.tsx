@@ -52,6 +52,7 @@ const UserLoginForm: React.FC = () => {
             sessionStorage.setItem(
                 "loggedInUser",
                 JSON.stringify({
+                    id: user.id,
                     token: user.token,
                     fullname: user.fullname,
                     email: user.email,
@@ -64,9 +65,7 @@ const UserLoginForm: React.FC = () => {
         } else if (response.status === 401) {
             const { errorMessage } = await response.json();
             setStatusMessages([{message: errorMessage ,type: "error",}]);
-        } else {
-            setStatusMessages([{message: "An error occurred. Please try again later.",type: "error",}]);
-        }
+        } else {}
     }
 
   return (

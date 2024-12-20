@@ -14,22 +14,25 @@ import { info } from 'console';
 import { title } from 'process';
 import { version } from 'os';
 import { expressjwt } from 'express-jwt';
+import helmet from 'helmet';
 
 const app = express();
+app.use(helmet());
+
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 
-app.use(
-    expressjwt({
-        secret: process.env.JWT_SECRET || 'default_secret', 
-        algorithms: ['HS256'],
-    }).unless({
-        path: ['api-docs', /^\/api-docs\/.*/, '/user/login', '/user/create'],
-    })
-)
+// app.use(
+//     expressjwt({
+//         secret: process.env.JWT_SECRET || 'default_secret', 
+//         algorithms: ['HS256'],
+//     }).unless({
+//         path: ['api-docs', /^\/api-docs\/.*/, '/user/login', '/user/create'],
+//     })
+// )
 
 
 app.use('/acteur', acteurRouter);

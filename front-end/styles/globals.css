@@ -245,18 +245,7 @@ h3 {
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
-}
-
-.logout-button {
-  padding: 0.5rem 2rem;
-  border: none;
-  border-radius: 5rem;
-  background-color: #ff0000;
-  color: white;
-  font-family: "InterVariable";
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
+  margin: 1rem;
 }
 
 .button-big {
@@ -457,37 +446,14 @@ h3 {
   align-items: center;
 }
 
-.login-box {
-  width: 30rem;
-  padding: 2rem;
-  border-radius: 1.5rem;
-  background-color: rgb(28, 28, 28);
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  max-width: min-content;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-}
-
-form input {
-  width: 15rem;
-  padding: 0.5rem;
+.amount-of-ticket {
+  width: 3rem;
+  color: white;
+  height: 2rem;
   border-radius: 0.5rem;
   border: none;
-}
-
-.input-field-box {
-  display: flex;
-  flex-direction: column;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-left: 1rem;
   margin-bottom: 1rem;
-  height: 10rem;
-  justify-content: space-around;
-}
-
-.text-red-800 {
-  color: #ff0000;
 }

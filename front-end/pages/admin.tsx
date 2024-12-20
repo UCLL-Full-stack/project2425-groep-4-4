@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Header from '../components/Header';
-import styles from '../styles/home.module.css';
+import styles from "@/styles/home.module.css";
 import { Acteur, Film, User, Voorstelling } from '@/types';
 import { useEffect, useState } from 'react';
 import filmService from '@/service/filmService';
@@ -8,65 +8,74 @@ import useInterval from 'use-interval';
 import acteurService from '@/service/acteurService';
 import userService from '@/service/userService';
 import voorstellingService from '@/service/voorstellingService';
+import useSWR from 'swr';
 
 const AllMovies: React.FC = () => {
-  const [films, setFilms] = useState<Array<Film>>([]);
-  const [actors, setActors] = useState<Array<Acteur>>([]);
-  const [users, setUsers] = useState<Array<User>>([]);
-  const [programs, setPrograms] = useState<Array<Voorstelling>>([]);
-  const [error, setError] = useState<string | null>(null);
   const [content, setContent] = useState<JSX.Element | null>(null);
 
-  // Fetch all films from the service
-  const getFilms = async () => {
-    try {
-      setError(null); // Reset any previous errors
-      const response = await filmService.getAllFilms();
-      const data = await response.json();
-      setFilms(data);
-    } catch (err) {
-      setError('Failed to fetch films');
-    }
-  };
+  const fetcher = async () => {
+    const responses = await Promise.all([
+      voorstellingService.getAllVoorstellingen(),
+      userService.getAllUsers(),
+      acteurService.getAllActeurs(),
+      filmService.getAllFilms()
+    ])
 
-  const getActors = async () => {
-    try {
-      setError(null);
-      const response = await acteurService.getAllActeurs();
-      const data = await response.json();
-      setActors(data);
-    } catch (err) {
-      setError('Failed to fetch actors');
+    const [programsResponse, usersResponse, actorsResponse, filmsResponse] = responses;
+
+    if (programsResponse.ok && usersResponse.ok && actorsResponse.ok && filmsResponse.ok) {
+      const programs = await programsResponse.json();
+      const users = await usersResponse.json();
+      const actors = await actorsResponse.json();
+      const films = await filmsResponse.json();
+      return { programs, users, actors, films };
     }
   }
 
-  const getUsers = async () => {
-    try {
-      setError(null);
-      const response = await userService.getAllUsers();
-      const data = await response.json();
-      setUsers(data);
-    } catch (err) {
-      setError('Failed to fetch users');
-    }
+  const { data, isLoading, error } = useSWR("fetcher", fetcher, {
+    refreshInterval: 5000, 
+  });
+  
+
+  if (isLoading) {
+    return (
+      <>
+      <Head>
+        <title>Courses</title>
+        <meta name="description" content="Courses app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header />
+      <main className={styles.main}>
+        <p>Loading...</p>
+      </main>
+    </>
+    )
   }
 
-  const getPrograms = async () => {
-    try {
-      setError(null);
-      const response = await voorstellingService.getAllVoorstellingen();
-      const data = await response.json();
-      setPrograms(data);
-    } catch (err) {
-      setError('Failed to fetch programs');
-    }
+  if (error) {
+    return (
+      <>
+      <Head>
+        <title>Courses</title>
+        <meta name="description" content="Courses app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header />
+      <main className={styles.main}>
+        <p>Error: {error.message}</p>
+      </main>
+    </>
+    )
   }
 
   // Handle click on "Movies" header
   const setMoviesList = () => {
     const movieList = (
       <div>
-        {films.map((film) => (
+        {data?.films.map((film: Film) => (
           <div className='flex admin-item-container'>
             <div key={film.id} className='item-info'>
               <p>{film.titel}</p>
@@ -86,11 +95,11 @@ const AllMovies: React.FC = () => {
   const setActorsList = () => {
     const actorList = (
       <div>
-        {actors.map((actor) => (
+        {data?.actors.map((actor: Acteur) => (
           <div className='flex admin-item-container'>
             <div key={actor.id} className='item-info'>
               <p>{actor.voornaam} {actor.achternaam}</p>
-              <p>{new Date(actor.geboortedatum).toLocaleDateString()}</p>
+              <p>{actor.geboortedatum ? new Date(actor.geboortedatum).toLocaleDateString() : 'N/A'}</p>
               <p>{actor.nationaliteit}</p>
             </div>
             <div className='button-container'>
@@ -106,7 +115,7 @@ const AllMovies: React.FC = () => {
   const setUsersList = () => {
     const userList = (
       <div>
-        {users.map((user) => (
+        {data?.users.map((user: User) => (
           <div className='flex admin-item-container'>
             <div key={user.id} className='item-info'>
               <p>{user.voornaam} {user.achternaam}</p>
@@ -125,7 +134,7 @@ const AllMovies: React.FC = () => {
   const setProgramsList = () => {
     const programList = (
       <div>
-        {programs.map((program) => (
+        {data?.programs.map((program: Voorstelling) => (
           <div className='flex admin-item-container'>
             <div key={program.id} className='item-info'>
               <p>{program.zaal.id}</p>
@@ -140,22 +149,6 @@ const AllMovies: React.FC = () => {
     );
     setContent(programList);
   }
-
-  // Fetch films on initial render
-  useEffect(() => {
-    getFilms(),
-    getActors(),
-    getUsers(),
-    getPrograms()
-  }, []);
-
-  // Polling for updates every 5 seconds
-  useInterval(() => {
-    getFilms(),
-    getActors(),
-    getUsers(),
-    getPrograms()
-  }, 5000);
 
   return (
     <>

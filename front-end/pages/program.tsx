@@ -8,29 +8,19 @@ import voorstellingService from '@/service/voorstellingService';
 import ProgramOverview from '@/components/ProgramOverview';
 import useInterval from 'use-interval';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 
 const program: React.FC = () => {
-  const [voorstellingen, setvoorstellingen] = useState<Array<Voorstelling>>();
-  const [error, setError] = useState<String>();
 
   const getvoorstellingen = async () => {
-    setError("");
-
-    const responses = await Promise.all([
-      voorstellingService.getAllVoorstellingen()
-    ]);
-    const [voorstellingResponse] = responses;
-    const voorstellingen = await voorstellingResponse.json();
-    setvoorstellingen(voorstellingen);
+    const voorstellingenResponse = await voorstellingService.getAllVoorstellingen();
+    if (voorstellingenResponse.ok) {
+      const voorstellingen = await voorstellingenResponse.json();
+      return voorstellingen;
+    }
   };
 
-  useEffect(() => {
-    getvoorstellingen();
-  }, []);
-
-  useInterval(() => {
-    getvoorstellingen();
-  }, 5000)
+  const { data, isLoading, error } = useSWR("getvoorstellingen", getvoorstellingen);
   
   return (
     <>
@@ -47,7 +37,7 @@ const program: React.FC = () => {
         </span>
         <>
           <ProgramOverview
-            voorstellingen={voorstellingen}
+            voorstellingen={data}
           />
         </>
       </main>

@@ -10,10 +10,6 @@
  *     FilmInput:
  *       type: object
  *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *           description: "De unieke identificatie van de film."
  *         titel:
  *           type: string
  *           example: "The Matrix"
@@ -26,11 +22,6 @@
  *           type: string
  *           example: "Een spannende thriller over een moordonderzoek."
  *           description: "Een korte beschrijving van de film."
- *         voorstellingen:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/VoorstellingInput'
- *           description: "Een lijst van voorstellingen voor deze film."
  *         acteurs:
  *           type: array
  *           items:

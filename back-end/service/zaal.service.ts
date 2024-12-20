@@ -2,13 +2,17 @@ import zaalDb from "../domain/data-access/zaal.db";
 import { Zaal } from "../domain/model/zaal";
 import { ZaalInput } from "../types";
 
-const createZaal = ({plaatsen}: ZaalInput): Zaal => {
+const createZaal = ({plaatsen, zaalnummer}: ZaalInput): Zaal => {
 
     if (!plaatsen) {
         throw new Error('ZaalInput is niet correct')
     }
 
-    const zaal = new Zaal({plaatsen})
+    if (!zaalnummer) {
+        throw new Error('ZaalInput is niet correct')
+    }
+
+    const zaal = new Zaal({plaatsen, zaalnummer})
 
     return zaalDb.createZaal(zaal)
 }

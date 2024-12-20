@@ -13,10 +13,15 @@ import useSWR from 'swr';
 const AllMovies: React.FC = () => {
   const [content, setContent] = useState<JSX.Element | null>(null);
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [isConfirmVisible, setConfirmVisible] = useState(false);
 
   const togglePopup = () => {
     setPopupVisible(!isPopupVisible);
   };
+
+  const toggleConfirm = () => {
+    setConfirmVisible(!isConfirmVisible);
+  }
 
   const fetcher = async () => {
     const responses = await Promise.all([
@@ -89,7 +94,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+              <button className='button red-button' onClick={toggleConfirm}>Delete</button>
             </div>
           </div>          
         ))}
@@ -175,6 +180,18 @@ const AllMovies: React.FC = () => {
             <p>This is the popup content.</p>
             <button onClick={togglePopup}>
               Close
+            </button>
+          </div>
+        )}
+        {isConfirmVisible && (
+          <div className='popup'>
+            <h2>Popup Content</h2>
+            <p>This is the popup content.</p>
+            <button onClick={toggleConfirm} className='button green-button'>
+              Yes
+            </button>
+            <button onClick={toggleConfirm} className='button red-button'>
+              No
             </button>
           </div>
         )}

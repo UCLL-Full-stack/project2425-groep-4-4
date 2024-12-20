@@ -84,6 +84,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button'>Edit</button>
+              <button className='button red-button'>Delete</button>
             </div>
           </div>          
         ))}
@@ -104,6 +105,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button'>Edit</button>
+              <button className='button red-button'>Delete</button>
             </div>
           </div>          
         ))}
@@ -123,6 +125,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button'>Edit</button>
+              <button className='button red-button'>Delete</button>
             </div>
           </div>          
         ))}
@@ -142,6 +145,7 @@ const AllMovies: React.FC = () => {
             </div>
             <div className='button-container'>
               <button className='button'>Edit</button>
+              <button className='button red-button'>Delete</button>
             </div>
           </div>          
         ))}

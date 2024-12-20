@@ -53,6 +53,7 @@ model Voorstelling {
   id           Int         @id @default(autoincrement())
   datum        DateTime
   tijdstip     String
+  plaatsen     Int
   zaal         Zaal        @relation(fields: [zaalId], references: [id])
   film         Film        @relation(fields: [filmId], references: [id])
   tickets      Ticket[]    
@@ -62,6 +63,7 @@ model Voorstelling {
 
 model Zaal {
   id           Int           @id @default(autoincrement())
+  zaalnummer   Int
   plaatsen     Int
   voorstellingen Voorstelling[]
 }

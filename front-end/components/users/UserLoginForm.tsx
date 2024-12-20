@@ -52,6 +52,7 @@ const UserLoginForm: React.FC = () => {
             sessionStorage.setItem(
                 "loggedInUser",
                 JSON.stringify({
+                    id: user.id,
                     token: user.token,
                     fullname: user.fullname,
                     email: user.email,

@@ -47,7 +47,8 @@ const ProgramOverview: React.FC<Props> = ({ voorstellingen }: Props) => {
                     <div>
                         <p className="program-title">{voorstelling.film.titel}</p>
                         <div className="flex info">
-                            <p>Lounge: {voorstelling.zaal.id}</p>
+                            <p>Lounge: {voorstelling.zaal.zaalnummer}</p>
+                            <p>Places Left: {voorstelling.zaal.plaatsen}</p>
                             <p>Date: {new Date(voorstelling.datum).toLocaleDateString()}</p>
                             <p>Time: {voorstelling.tijdstip}</p>
                         </div>

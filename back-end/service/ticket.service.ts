@@ -1,27 +1,38 @@
 import ticketDb from "../domain/data-access/ticket.db";
+import userDb from "../domain/data-access/user.db";
 import voorstellingDb from "../domain/data-access/voorstelling.db";
 import { Ticket } from "../domain/model/ticket";
 import { TicketInput } from "../types";
 
-// const createTicket = ({voorstelling: VoorstellingInput}: TicketInput): Ticket => {
+const createTicket = async ({voorstellingId, userId}: TicketInput): Promise<Ticket> => {
 
-//     if (!VoorstellingInput) {
-//         throw new Error("voorstelling is verplicht")
-//     }
+    if (!voorstellingId) {
+        throw new Error("voorstelling is verplicht")
+    }
 
-//     if (VoorstellingInput.id === undefined) {
-//         throw new Error('voorstelling ID is undefined');
-//     }
+    if (!userId) {
+        throw new Error("user is verplicht")
+    }
 
-//     const voorstelling = voorstellingDb.getVoorstellingById(VoorstellingInput.id)
-//     const ticket = new Ticket({voorstelling, user: undefined})
+    const voorstelling = await voorstellingDb.getVoorstellingById({ id: voorstellingId })
+    if (!voorstelling) {
+        throw new Error("voorstelling niet gevonden")
+    }
+    const user = await userDb.getUserById({ id: userId })
+    if (!user) {
+        throw new Error("user niet gevonden")
+    }
 
-//     return ticketDb.createTicket(ticket)
-// }
+    const ticket = new Ticket({voorstelling, user})
+    return ticketDb.createTicket(ticket)
+}
 
-const getAllTickets = async (): Promise<Ticket[]> => ticketDb.getAllTickets(); 
+const getTicketsByUser = async ({ id }: { id: number }) => {
+    return ticketDb.getTicketsByUser({ id });
+}
+
 
 export default {
-    // createTicket,
-    getAllTickets
+    createTicket,
+    getTicketsByUser,
 }

@@ -35,8 +35,14 @@ const Header = () => {
         <ul className='flex wrap'>
           <li><a href="/allMovies">All Movies</a></li>
           <li><a href="/program">Program</a></li>
-          {loggedInUser?.role === 'admin' &&
-            <li><a href="/admin">Admin</a></li>
+          {loggedInUser?.role === 'admin'  &&
+            <li><a href="/admin">Admin Panel</a></li>
+          }
+          {loggedInUser?.role === 'regisseur'  &&
+            <li><a href="/regisseur">Add Movie</a></li>
+          }
+          {loggedInUser && 
+            <li><a href="/myTickets">My Tickets</a></li>
           }
         </ul>
       </nav>

@@ -30,7 +30,7 @@ const createFilm = async (film: FilmInput) => {
   const loggedInUser = sessionStorage.getItem('loggedInUser');
   const token = loggedInUser ? JSON.parse(loggedInUser).token : null;
   const role = loggedInUser ? JSON.parse(loggedInUser).role : null;
-  if (role !== 'admin') {
+  if (role !== 'regisseur') {
     throw new Error('You are not authorized to create a film');
   }
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/film/create', {

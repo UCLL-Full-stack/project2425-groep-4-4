@@ -23,6 +23,10 @@
  *           items:
  *             $ref: '#/components/schemas/VoorstellingInput'
  *           description: "Een lijst van voorstellingen die in deze zaal plaatsvinden."
+ *         zaalnummer:
+ *           type: integer
+ *           example: 1
+ *           description: "Het nummer van de zaal."
  */
 import express, {Request, Response} from 'express';
 import { ZaalInput } from '../types';
@@ -116,6 +120,7 @@ zaalRouter.post('/create', async (req: Request, res: Response) => {
 zaalRouter.get('/getAll', async (req: Request, res: Response) => {
     try {
         const zalen = await zaalService.getAllZalen();
+        console.log(zalen);
         res.status(200).json(zalen);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});

@@ -445,3 +445,15 @@ h3 {
   display: flex;
   align-items: center;
 }
+
+.amount-of-ticket {
+  width: 3rem;
+  color: white;
+  height: 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}

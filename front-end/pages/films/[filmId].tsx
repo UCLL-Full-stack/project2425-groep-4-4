@@ -58,7 +58,10 @@ const ReadFilmById = () => {
                         <h1>{data.titel}</h1>
                         <p className="details-item">{data.beschrijving}</p>
                         <p className="details-item">Duration: {data.speeltijd} min</p>
-                        <p className="details-item">Actors: {data.acteurs?.join(", ")}</p>
+                        <p className="details-item">
+                          Actors: {data.acteurs?.map((acteur: { voornaam: any; achternaam: any; }) => `${acteur.voornaam} ${acteur.achternaam}`).join(", ")}
+                        </p>
+
                         <button className="button-big" onClick={() => goToProgramPage(data.id)}>See Program</button>
                     </div>
                 </div>

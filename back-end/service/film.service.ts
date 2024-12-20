@@ -1,10 +1,11 @@
 import filmDb from "../domain/data-access/film.db";
+import { Acteur } from "../domain/model/acteur";
 import { Film } from "../domain/model/film";
 import { FilmInput } from "../types";
 
-const createFilm = ({titel, speeltijd, beschrijving}: FilmInput): Film => {
+const createFilm = async ({titel, speeltijd, beschrijving, acteurs}: FilmInput): Promise<Film> => {
 
-    if (!speeltijd || !beschrijving || !titel) {
+    if (!speeltijd || !beschrijving || !titel || !acteurs) {
         throw new Error("Speeltijd en beschrijving zijn verplicht")
     }
 
@@ -12,7 +13,12 @@ const createFilm = ({titel, speeltijd, beschrijving}: FilmInput): Film => {
         throw new Error(`Film met titel ${titel} bestaat al`)
     }
 
-    const film = new Film({titel, speeltijd, beschrijving, acteurs: []})
+    const film = new Film({
+        titel, 
+        speeltijd, 
+        beschrijving, 
+        acteurs: acteurs.map(acteur => new Acteur(acteur))
+    })
     return filmDb.createFilm(film)
 }
 

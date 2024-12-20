@@ -10,7 +10,7 @@ const createUser = async ({voornaam, achternaam, email, password}: UserInput): P
         throw new Error("Voornaam, achternaam, email en password zijn verplicht")
     }
 
-    const exisiting = await userDb.getUserByEmail(email);
+    const exisiting = await userDb.getUserByEmail({email});
 
     if (exisiting) {
         throw new Error(`User with email ${email} already exist.`);
@@ -22,7 +22,7 @@ const createUser = async ({voornaam, achternaam, email, password}: UserInput): P
 }
 
 const authenticate = async ({email, password}: UserInput): Promise<AuthenticationResponse> => {
-    const user = await userDb.getUserByEmail(email);
+    const user = await userDb.getUserByEmail({email});
 
     if (!user) {
         throw new Error(`User with email ${email} does not exist.`);
@@ -34,6 +34,7 @@ const authenticate = async ({email, password}: UserInput): Promise<Authenticatio
     }
 
     return {
+        id: user.id!,
         token: generateJwtToken({email, role: user.role}),
         email: user.email,
         fullname: `${user.voornaam} ${user.achternaam}`,
@@ -60,9 +61,16 @@ const getUserById = async (id: number): Promise<User> => {
     return user;
 };
 
+const getUserByEmail = async (email: string): Promise<User> => {
+    const user = await userDb.getUserByEmail({email});
+    if (!user) throw new Error(`User with email ${email} does not exist.`);
+    return user;
+}
+
 export default {
     createUser,
     getAllUsers,
     getUserById,
-    authenticate
+    authenticate,
+    getUserByEmail
 }

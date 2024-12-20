@@ -10,16 +10,19 @@
  *     TicketInput:
  *       type: object
  *       properties:
- *         id:
- *           type: integer
- *           example: 1
- *           description: "De unieke identificatie van het ticket."
+ *         voorstellingId:
+ *           type: number
+ *           example: 123
+ *         userId:
+ *           type: number
+ *           example: 40
+ *     Ticket:
+ *       type: object
+ *       properties:
  *         voorstelling:
  *           $ref: '#/components/schemas/VoorstellingInput'
- *           description: "Informatie over de voorstelling waarvoor het ticket is."
  *         user:
  *           $ref: '#/components/schemas/UserInput'
- *           description: "Informatie over de gebruiker die het ticket heeft gekocht."
  */
 
 import express, {Request, Response} from 'express';
@@ -69,55 +72,48 @@ const ticketRouter = express.Router();
  *                   type: string
  *                   example: "Foutmelding hier."
  */
-// ticketRouter.post('/create', (req: Request, res: Response) => {
-//     try {
-//         const ticket = <TicketInput>req.body;
-//         const result = ticketService.createTicket(ticket);
-//         res.status(200).json(result);
-//     }
-//     catch (error) {
-//         res.status(400).json({status: 'error', message: (error as Error).message});
-//     }
-// })
+ticketRouter.post('/create', (req: Request, res: Response) => {
+    try {
+        const ticket = <TicketInput>req.body;
+        console.log(ticket);
+        const result = ticketService.createTicket(ticket);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+})
 
 /**
  * @swagger
- * /ticket/getAll:
+ * /ticket/{id}:
  *   get:
- *     security:
- *      - bearerAuth: []
- *     summary: Verkrijg een lijst van alle tickets
+ *     summary: Get the users Tickets by userid.
  *     tags: [Tickets]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The user id.
  *     responses:
  *       200:
- *         description: Lijst van tickets succesvol opgehaald
+ *         description: An array of tickets.
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/TicketInput'
- *       400:
- *         description: Fout bij het ophalen van de tickets
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 message:
- *                   type: string
- *                   example: "Foutmelding hier."
+ *               $ref: '#/components/schemas/VoorstellingInput'
  */
-ticketRouter.get('/getAll', async (req: Request, res: Response) => {
+ticketRouter.get('/:id', async (req: Request, res: Response) => { 
     try {
-        const tickets = await ticketService.getAllTickets();
+        const tickets = await ticketService.getTicketsByUser({ id: Number(req.params.id) });
         res.status(200).json(tickets);
     } catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});
     }
-})
+});
+
+
 
 export { ticketRouter };

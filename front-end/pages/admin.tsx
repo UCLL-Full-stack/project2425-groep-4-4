@@ -65,7 +65,7 @@ const AllMovies: React.FC = () => {
       </Head>
       <Header />
       <main className={styles.main}>
-        <p>Error: {error}</p>
+        <p>Error: {error.message}</p>
       </main>
     </>
     )

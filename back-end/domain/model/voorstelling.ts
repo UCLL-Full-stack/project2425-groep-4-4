@@ -8,14 +8,16 @@ export class Voorstelling {
     readonly film: Film
     readonly datum: Date
     readonly tijdstip: string
+    readonly plaatsen: number
 
 
-    constructor(voorstelling: {id?: number; zaal: Zaal; film: Film; datum: Date; tijdstip: string;}) {
+    constructor(voorstelling: {id?: number; zaal: Zaal; film: Film; datum: Date; tijdstip: string; plaatsen: number}) {
         this.id = voorstelling.id
         this.zaal = voorstelling.zaal
         this.film = voorstelling.film
         this.datum = voorstelling.datum
         this.tijdstip = voorstelling.tijdstip
+        this.plaatsen = voorstelling.plaatsen
         this.validate(voorstelling)
     }
 
@@ -39,6 +41,10 @@ export class Voorstelling {
         return this.tijdstip
     }
 
+    getPlaatsen(): number {
+        return this.plaatsen
+    }
+
     validate(voorstelling: {zaal: Zaal; film: Film; datum: Date; tijdstip: string}) {
         if (!voorstelling.zaal) {
             throw new Error("ZaalId is verplicht")
@@ -60,6 +66,7 @@ export class Voorstelling {
         film,
         datum,
         tijdstip,
+        plaatsen
     }: VoorstellingPrisma & { zaal: ZaalPrisma, film: FilmPrisma }): Voorstelling {
         return new Voorstelling({
             id,
@@ -67,6 +74,7 @@ export class Voorstelling {
             film: Film.from(film as FilmPrisma & { acteurs: ActeurPrisma[]}),
             datum,
             tijdstip,
+            plaatsen
         });
     }
 }

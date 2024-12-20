@@ -12,9 +12,13 @@ import useSWR from 'swr';
 
 const AllMovies: React.FC = () => {
   const [content, setContent] = useState<JSX.Element | null>(null);
+  const [popupInput, setPopupInput] = useState<string>('');
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Film | Acteur | User | Voorstelling | null>(null);
 
-  const togglePopup = () => {
+
+  const togglePopup = (item?: Film | Acteur | User | Voorstelling | null) => {
+    setSelectedItem(item || null);
     setPopupVisible(!isPopupVisible);
   };
 
@@ -38,7 +42,7 @@ const AllMovies: React.FC = () => {
   }
 
   const { data, isLoading, error } = useSWR("fetcher", fetcher, {
-    refreshInterval: 5000, 
+    refreshInterval: 10000000, 
   });
   
 
@@ -88,13 +92,14 @@ const AllMovies: React.FC = () => {
               <p>{film.speeltijd}</p>
             </div>
             <div className='button-container'>
-              <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+              <button className='button' onClick={() => togglePopup(film)}>Edit</button>
+              <button className='button red-button'onClick={() => deleteItem(film)}>Delete</button>
             </div>
           </div>          
         ))}
       </div>
     );
+    setPopupInput("movie")
     setContent(movieList);
   };
 
@@ -109,13 +114,14 @@ const AllMovies: React.FC = () => {
               <p>{actor.nationaliteit}</p>
             </div>
             <div className='button-container'>
-              <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+            <button className='button' onClick={() => togglePopup(actor)}>Edit</button>
+            <button className='button red-button'onClick={() => deleteItem(actor)}>Delete</button>
             </div>
           </div>          
         ))}
       </div>
     );
+    setPopupInput("actor")
     setContent(actorList);
   }
 
@@ -129,13 +135,14 @@ const AllMovies: React.FC = () => {
               <p>{user.email}</p>
             </div>
             <div className='button-container'>
-              <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+            <button className='button' onClick={() => togglePopup(user)}>Edit</button>
+            <button className='button red-button'onClick={() => deleteItem(user)}>Delete</button>
             </div>
           </div>          
         ))}
       </div>
     );
+    setPopupInput("user")
     setContent(userList);
   }
 
@@ -145,18 +152,36 @@ const AllMovies: React.FC = () => {
         {data?.programs.map((program: Voorstelling) => (
           <div className='flex admin-item-container'>
             <div key={program.id} className='item-info'>
-              <p>{program.zaal.id}</p>
-              <p>{program.film.titel}</p>
+              <p>Zaal: {program.zaal.zaalnummer}</p>
+              <p>Film: {program.film.titel}</p>
+              <p>Datum: {new Date(program.datum).toLocaleDateString()}</p>
+              <p>Tijd: {program.tijdstip}</p>
             </div>
             <div className='button-container'>
-              <button className='button' onClick={togglePopup}>Edit</button>
-              <button className='button red-button'>Delete</button>
+            <button className='button' onClick={() => togglePopup(program)}>Edit</button>
+            <button className='button red-button'onClick={() => deleteItem(program)}>Delete</button>
             </div>
           </div>          
         ))}
       </div>
     );
+    setPopupInput("program")
     setContent(programList);
+  }
+
+  const handleMovieSubmit = async (film: Film) => {
+    // Add your submit logic here
+  };
+
+  const deleteItem = async (item: Film | Acteur | User | Voorstelling) => {
+    if ('titel' in item) {
+      console.log(item.id);
+      const response = await filmService.deleteFilm(item.id);
+      console.log(response);
+      if (response.ok) {
+        setMoviesList();
+      }
+    }
   }
 
   return (
@@ -169,11 +194,38 @@ const AllMovies: React.FC = () => {
       </Head>
       <Header />
       <main className={styles.main}>
-        {isPopupVisible && (
+        {isPopupVisible && popupInput === "movie" && (
           <div className='popup'>
-            <h2>Popup Content</h2>
+            <h2>Edit Movie</h2>
             <p>This is the popup content.</p>
-            <button onClick={togglePopup}>
+            <button onClick={() => togglePopup(null)}>
+              Close
+            </button>
+          </div>
+        )}
+        {isPopupVisible && popupInput === "actor" && (
+          <div className='popup'>
+            <h2>Edit actor</h2>
+            <p>This is the popup content.</p>
+            <button onClick={() => togglePopup(null)}>
+              Close
+            </button>
+          </div>
+        )}
+        {isPopupVisible && popupInput === "user" && (
+          <div className='popup'>
+            <h2>Edit user</h2>
+            <p>This is the popup content.</p>
+            <button onClick={() => togglePopup(null)}>
+              Close
+            </button>
+          </div>
+        )}
+        {isPopupVisible && popupInput === "program" && (
+          <div className='popup'>
+            <h2>Edit program</h2>
+            <p>This is the popup content.</p>
+            <button onClick={() => togglePopup(null)}>
               Close
             </button>
           </div>

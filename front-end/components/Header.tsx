@@ -47,9 +47,9 @@ const Header = () => {
         </ul>
       </nav>
       <div className='header-section end'>
-      {!loggedInUser && <button className='button' onClick={handleSignup}>Signup</button>}
+      {!loggedInUser && <button className='button signup-button' onClick={handleSignup}>Signup</button>}
         {!loggedInUser && <button className='button' onClick={handleLogin}>Login</button>}
-        {loggedInUser && <button className='button' onClick={handleLogout}>Logout</button>}
+        {loggedInUser && <button className='button logout-button' onClick={handleLogout}>Logout</button>}
       </div>
       
     </header>

@@ -69,7 +69,7 @@ const UserLoginForm: React.FC = () => {
     }
 
   return (
-    <div className="center">
+    <div className="center form-container">
       <h2 className="center-text">Login</h2>
       {statusMessages && (
         <div className="row">
@@ -92,13 +92,12 @@ const UserLoginForm: React.FC = () => {
         <label htmlFor="nameInput" className="block mb-2 text-sm font-medium">
           Email:
         </label>
-        <div className="block mb-2 text-sm font-medium">
+        <div className="block mb-2 text-sm font-medium fixed-height">
           <input
             id="emailInput"
             type="text"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue:500 block w-full p-2.5"
           />
           {emailError && <div className="text-red-800 ">{emailError}</div>}
         </div>
@@ -111,13 +110,12 @@ const UserLoginForm: React.FC = () => {
               Password
             </label>
           </div>
-          <div className="block mb-2 text-sm font-medium">
+          <div className="block mb-2 text-sm font-medium fixed-height">
             <input
               id="passwordInput"
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue:500 block w-full p-2.5"
             />
             {passwordError && (
               <div className=" text-red-800">{passwordError}</div>
@@ -125,7 +123,7 @@ const UserLoginForm: React.FC = () => {
           </div>
         </div>
         <button
-          className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          className="button"
           type="submit"
         >
           Login

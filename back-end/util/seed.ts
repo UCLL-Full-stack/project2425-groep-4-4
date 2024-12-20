@@ -108,7 +108,7 @@ async function main() {
 
   const avatar = await prisma.film.create({
     data: {
-      titel: "Avatar: The Way of Water",
+      titel: "Avatar The Way of Water",
       speeltijd: 192,
       beschrijving: "Jake Sully and Neytiri are back on Pandora for a new adventure.",
       acteurs: {connect: [{id: acteur1.id}, {id: acteur7.id}]},

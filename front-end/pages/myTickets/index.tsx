@@ -80,6 +80,13 @@ const myTickets: React.FC = () => {
                     data.map((ticket: Ticket) => (
                       <div key={ticket.id} className='flex admin-item-container'>
                         <div className='item-info'>
+                          <div>
+                              <img 
+                                  src={`./images/cover-${ticket.voorstelling.film.titel.replace(/ /g, '_')}.jpg`}
+                                  alt="movie cover"
+                                  className="movie-icon"
+                              />
+                          </div>
                           <p>{ticket.voorstelling.film.titel}</p>
                           <p>Date: {new Date(ticket.voorstelling.datum).toLocaleDateString()}</p>
                           <p>Time: {ticket.voorstelling.tijdstip}</p>

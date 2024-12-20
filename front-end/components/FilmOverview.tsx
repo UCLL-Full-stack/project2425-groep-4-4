@@ -36,7 +36,7 @@ const FilmOverview: React.FC<Props> = ({ films }: Props) => {
                     onClick={() => goToFilmPage(film.id)}
                 >
                     <div className="poster">
-                        <img src={`./images/cover-${film.id}.jpg`} alt="movie cover" />
+                        <img src={`./images/cover-${film.titel.replace(/ /g, '_')}.jpg`}  alt="movie cover" />
                     </div>
                     <div className="details">
                         <p className="movie-title">{film.titel}</p>

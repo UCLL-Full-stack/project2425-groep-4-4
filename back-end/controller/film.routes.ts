@@ -27,10 +27,62 @@
  *           items:
  *             $ref: '#/components/schemas/ActeurInput'
  *           description: "Een lijst van acteurs die in de film spelen."
+ *     DeleteFilm:
+ *       type: object
+ *       properties:
+ *         filmId:         
+ *           type: number
+ *           format: int64
+ *     FilmUpdate:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 101
+ *           description: "De unieke identificatie van de film."
+ *         titel:
+ *           type: string
+ *           example: "Inception"
+ *           description: "De titel van de film."
+ *         speeltijd:
+ *           type: integer
+ *           example: 148
+ *           description: "De duur van de film in minuten."
+ *         beschrijving:
+ *           type: string
+ *           example: "Een dief die technologie gebruikt om in de dromen van mensen te infiltreren."
+ *           description: "Een samenvatting van de film."
+ *         acteurs:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 42
+ *                 description: "De unieke identificatie van de acteur."
+ *               voornaam:
+ *                 type: string
+ *                 example: "Leonardo"
+ *                 description: "De voornaam van de acteur."
+ *               achternaam:
+ *                 type: string
+ *                 example: "DiCaprio"
+ *                 description: "De achternaam van de acteur."
+ *               nationaliteit:
+ *                 type: string
+ *                 example: "Amerikaans"
+ *                 description: "De nationaliteit van de acteur."
+ *               geboortedatum:
+ *                 type: string
+ *                 format: date
+ *                 example: "1974-11-11"
+ *                 description: "De geboortedatum van de acteur."
  */
 import express, {Request, Response} from 'express';
 import { FilmInput } from '../types';
 import filmService from '../service/film.service';
+import { Film } from '../domain/model/film';
 
 const filmRouter = express.Router();
 
@@ -179,5 +231,90 @@ filmRouter.get('/:id', async (req: Request, res: Response) => {
         res.status(400).json({status: 'error', message: (error as Error).message});
     }
 });
+
+/**
+ * @swagger
+ * /film/delete:
+ *   delete:
+ *     summary: Delete a film in the database.
+ *     tags: [Films]
+ *     description: Deletes a film based on the provided data.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             $ref: '#/components/schemas/DeleteFilm'
+ *     responses:
+ *       200:
+ *         description: Successful deletion of film.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FilmInput'
+ *       500:
+ *         description: Internal server error.
+ */
+filmRouter.delete('/delete', async (req: Request, res: Response) => {
+    try {
+        const filmId = <number>req.body.filmId;
+
+        const film = await filmService.deleteFilmWithId({ filmId });
+        res.status(200).json(film)
+    }
+    catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
+ * /film/update:
+ *   put:
+ *     summary: Update een bestaande film
+ *     tags: [Films]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FilmUpdate'
+ *     responses:
+ *       200:
+ *         description: film succesvol geüpdatet
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "success"
+ *                 data:
+ *                   $ref: '#/components/schemas/FilmInput'
+ *       400:
+ *         description: Fout bij het updaten van de film
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Foutmelding hier."
+ */
+filmRouter.put('/update', async (req: Request, res: Response) => {
+    try {
+        const film = <Film>req.body;
+        const result = filmService.updateFilm(film);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+})
 
 export { filmRouter };

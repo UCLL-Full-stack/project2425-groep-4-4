@@ -64,9 +64,16 @@ const updateVoorstelling = async ({ id, zaalId, filmId, datum, tijdstip, plaatse
     return voorstellingDb.updateVoorstelling(voorstelling);
 }
 
+const deleteVoorstellingWithId = async ({voorstellingId}: {voorstellingId: number}): Promise<Voorstelling> => {
+    const voorstelling = await voorstellingDb.deleteVoorstellingWithId({voorstellingId});
+    if (!voorstelling) throw new Error(`Voorstelling with id ${voorstellingId} does not exist.`);
+    return voorstelling
+}
+
 export default {
     createVoorstelling,
     getAllVoorstellingen,
     getVoorstellingById,
-    updateVoorstelling
+    updateVoorstelling,
+    deleteVoorstellingWithId
 }

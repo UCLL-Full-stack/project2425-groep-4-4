@@ -81,10 +81,46 @@
  *        email:
  *         type: string
  *         example: "admin@cinema.com"
+ *     DeleteUser:
+ *       type: object
+ *       properties:
+ *         userId:         
+ *           type: number
+ *           format: int64
+ *     UserUpdate:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           example: 42
+ *           description: "De unieke identificatie van de gebruiker."
+ *         role:
+ *           type: string
+ *           example: "admin"
+ *           description: "De rol van de gebruiker binnen het systeem."
+ *         voornaam:
+ *           type: string
+ *           example: "Hendrik"
+ *           description: "De voornaam van de gebruiker."
+ *         achternaam:
+ *           type: string
+ *           example: "Geurts"
+ *           description: "De achternaam van de gebruiker."
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: "hendrik.geurts@example.com"
+ *           description: "Het e-mailadres van de gebruiker."
+ *         password:
+ *           type: string
+ *           format: password
+ *           example: "$2b$10$ABCDEFGHIJKLMNOPQRSTUV"
+ *           description: "Het gehashte wachtwoord van de gebruiker."
  */
 import express, {Request, Response} from 'express';
 import { UserInput } from '../types';
 import userService from '../service/user.service';
+import { User } from '../domain/model/user';
 
 const userRouter = express.Router();
 
@@ -248,6 +284,92 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         const response = await userService.authenticate(user)
         res.status(200).json({message: 'authentication succesful', ...response});
     } catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+})
+
+/**
+ * @swagger
+ * /user/delete:
+ *   delete:
+ *     summary: Delete a user in the database.
+ *     tags: [Users]
+ *     description: Deletes an user based on the provided data.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             $ref: '#/components/schemas/DeleteUser'
+ *     responses:
+ *       200:
+ *         description: Successful deletion of acteur.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserInput'
+ *       500:
+ *         description: Internal server error.
+ * 
+ */
+userRouter.delete('/delete', async (req: Request, res: Response) => {
+    try {
+        const userId = <number>req.body.userId;
+
+        const user = await userService.deleteUserWithId({ userId });
+        res.status(200).json(user)
+    }
+    catch (error) {
+        res.status(400).json({status: 'error', message: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
+ * /user/update:
+ *   put:
+ *     summary: Update een bestaande user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserUpdate'
+ *     responses:
+ *       200:
+ *         description: user succesvol geüpdatet
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "success"
+ *                 data:
+ *                   $ref: '#/components/schemas/UserInput'
+ *       400:
+ *         description: Fout bij het updaten van de voorstelling
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Foutmelding hier."
+ */
+userRouter.put('/update', async (req: Request, res: Response) => {
+    try {
+        const user = <User>req.body;
+        const result = userService.updateUser(user);
+        res.status(200).json(result);
+    }
+    catch (error) {
         res.status(400).json({status: 'error', message: (error as Error).message});
     }
 })

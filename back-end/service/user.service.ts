@@ -67,10 +67,32 @@ const getUserByEmail = async (email: string): Promise<User> => {
     return user;
 }
 
+const deleteUserWithId = async ({userId}: {userId: number}): Promise<User> => {
+    const user = await userDb.deleteUserWithId({ userId });
+    if (!user) throw new Error(`User with id ${userId} does not exist.`);
+    return user;
+}
+
+const updateUser = async ({ id, role, voornaam, achternaam, email, password }: User) => {
+    if (!voornaam || !achternaam || !email || !password) {
+        throw new Error("Voornaam, achternaam, email en password zijn verplicht")
+    }
+
+    if (id && getUserById(id) === null) {
+        throw new Error('User not found');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = new User({id, role, voornaam, achternaam, email, password: hashedPassword})
+    return userDb.updateUser(user);
+}
+
 export default {
     createUser,
     getAllUsers,
     getUserById,
     authenticate,
-    getUserByEmail
+    getUserByEmail,
+    deleteUserWithId,
+    updateUser
 }

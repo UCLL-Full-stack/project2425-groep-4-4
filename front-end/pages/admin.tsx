@@ -12,6 +12,11 @@ import useSWR from 'swr';
 
 const AllMovies: React.FC = () => {
   const [content, setContent] = useState<JSX.Element | null>(null);
+  const [isPopupVisible, setPopupVisible] = useState(false);
+
+  const togglePopup = () => {
+    setPopupVisible(!isPopupVisible);
+  };
 
   const fetcher = async () => {
     const responses = await Promise.all([
@@ -83,7 +88,7 @@ const AllMovies: React.FC = () => {
               <p>{film.speeltijd}</p>
             </div>
             <div className='button-container'>
-              <button className='button'>Edit</button>
+              <button className='button' onClick={togglePopup}>Edit</button>
               <button className='button red-button'>Delete</button>
             </div>
           </div>          
@@ -104,7 +109,7 @@ const AllMovies: React.FC = () => {
               <p>{actor.nationaliteit}</p>
             </div>
             <div className='button-container'>
-              <button className='button'>Edit</button>
+              <button className='button' onClick={togglePopup}>Edit</button>
               <button className='button red-button'>Delete</button>
             </div>
           </div>          
@@ -124,7 +129,7 @@ const AllMovies: React.FC = () => {
               <p>{user.email}</p>
             </div>
             <div className='button-container'>
-              <button className='button'>Edit</button>
+              <button className='button' onClick={togglePopup}>Edit</button>
               <button className='button red-button'>Delete</button>
             </div>
           </div>          
@@ -144,7 +149,7 @@ const AllMovies: React.FC = () => {
               <p>{program.film.titel}</p>
             </div>
             <div className='button-container'>
-              <button className='button'>Edit</button>
+              <button className='button' onClick={togglePopup}>Edit</button>
               <button className='button red-button'>Delete</button>
             </div>
           </div>          
@@ -164,6 +169,15 @@ const AllMovies: React.FC = () => {
       </Head>
       <Header />
       <main className={styles.main}>
+        {isPopupVisible && (
+          <div className='popup'>
+            <h2>Popup Content</h2>
+            <p>This is the popup content.</p>
+            <button onClick={togglePopup}>
+              Close
+            </button>
+          </div>
+        )}
         <div className="flex admin-header">
           <h2 onClick={setMoviesList}>Movies</h2>
           <h2 onClick={setActorsList}>Actors</h2>
